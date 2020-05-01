@@ -177,7 +177,7 @@ const uint16_t idle[] PROGMEM = {
 
 Firing animation has an array named __fire[]__ like __idle[]__ and an another array named __fireOH[]__
 
-__fire[]__ is the default firing animation, and fireOH[] is the firing animation configured as overheat level.
+__fire[]__ is the default firing animation, and __fireOH[]__ is the firing animation configured as overheat level.
 
 What is the difference between by __fire[]__ and __fireOH[]__ ?
 
