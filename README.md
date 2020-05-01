@@ -171,3 +171,38 @@ const uint16_t idle[] PROGMEM = {
 ```
 
 ![BARGRAPH_ANIMATED](https://i.imgur.com/KoFsyLX.gif)
+
+
+
+Firing animation has an array named fire[] like idle[] and an another array named fireOH[]
+
+fire[] is the default firing animation, and fireOH[] is the firing animation configured as overheat level.
+
+What is the difference between by fire[] and fireOH[] ?
+
+fire[] array display as an animated frame when user fire. fireOH[] will display the frame according to the overheat level.
+
+
+fireOH[] array can be configured like idle[] array. fire[] array can be configured like idle[] array too, but it as a dictionnary that the user can create, and choose it by the parameter ANIMATION_X(see table above here...).
+
+To create a new animation, you must create your array named fire[] and set frame to it (of course), and add define conditions, see example below :
+
+```
+#if USE_THIS == ANIMATION_4
+const uint16_t fire[] PROGMEM {
+
+0b1100000000000011,
+0b0011000000001100,
+0b0000110000110000,
+0b0000001111000000,
+0b0000000110000000,
+0b0000000000000000,
+
+};
+
+#endif
+
+```
+
+
+
