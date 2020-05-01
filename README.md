@@ -83,9 +83,3 @@ You have parameters in the header file parameters.h that you can change to confi
 | CLOCK_SEERS_1 | 0-65535 | Set blinking seers' speed in count (Low value = High Refresh Speed) |
 | CLOCK_SEERS_2 | 0-65535 | Set overheat seers' speed in count (Low value = High Refresh Speed) |
 | CLOCK_SEERS_3 | 0-65535 | Set Main seers' speed in count (Low value = High Refresh Speed) |
-
-
-## Bargraph Animation
-
-//add tutorial here
-
