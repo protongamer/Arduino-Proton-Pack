@@ -183,7 +183,7 @@ What is the difference between by fire[] and fireOH[] ?
 fire[] array display as an animated frame when user fire. fireOH[] will display the frame according to the overheat level.
 
 
-fireOH[] array can be configured like idle[] array. fire[] array can be configured like idle[] array too, but it as a dictionnary that the user can create, and choose it by the parameter ANIMATION_X(see table above here...).
+fireOH[] array can be configured like idle[] array. fire[] array can be configured like idle[] array too, but it as a dictionnary that the user can create, and choose it by the parameter ANIMATION_X(see table VARIOUS PARAMETERS above).
 
 To create a new animation, you must create your array named fire[] and set frame to it (of course), and add define conditions, see example below :
 
