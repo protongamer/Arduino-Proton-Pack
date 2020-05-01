@@ -83,3 +83,91 @@ You have parameters in the header file parameters.h that you can change to confi
 | CLOCK_SEERS_1 | 0-65535 | Set blinking seers' speed in count (Low value = High Refresh Speed) |
 | CLOCK_SEERS_2 | 0-65535 | Set overheat seers' speed in count (Low value = High Refresh Speed) |
 | CLOCK_SEERS_3 | 0-65535 | Set Main seers' speed in count (Low value = High Refresh Speed) |
+
+## Bargraph Animation
+
+You have 2 differents animations, 1 idle animation and 1 firing animation. Idle animation launch only when user don't fire with the Proton Pack. If user start fire, the bargrpah will display a firing animation(depend on parameters used).
+
+How to configure an animation ?
+
+For Idle animation :
+
+Idle animation has one 16 bits type array named "idle" that you can find in bargraph_animation.h. Every bits of the 16 bits type are led state depending by the bargraph pins configured array(that you can find in PROTON_PACK_SIMPLE.ino file).
+
+``` 
+uint8_t bargraph[] = { B_PIN_1, B_PIN_2, B_PIN_3, B_PIN_4, B_PIN_5, B_PIN_6, B_PIN_7, B_PIN_8, B_PIN_9, B_PIN_10, B_PIN_11, B_PIN_12, B_PIN_13, B_PIN_14, B_PIN_15, }; 
+```
+
+The default idle array should be like this :
+
+```
+const uint16_t idle[] PROGMEM = {
+  0b0000000000000000,
+  0b0000000000000001,
+  0b0000000000000011,
+  0b0000000000000111,
+  0b0000000000001111,
+  0b0000000000011111,
+  0b0000000000111111,
+  0b0000000001111111,
+  0b0000000011111111,
+  0b0000000111111111,
+  0b0000001111111111,
+  0b0000011111111111,
+  0b0000111111111111,
+  0b0001111111111111,
+  0b0011111111111111,
+  0b0111111111111111,
+  0b0011111111111111,
+  0b0001111111111111,
+  0b0000111111111111,
+  0b0000011111111111,
+  0b0000001111111111,
+  0b0000000111111111,
+  0b0000000011111111,
+  0b0000000001111111,
+  0b0000000000111111,
+  0b0000000000011111,
+  0b0000000000001111,
+  0b0000000000000111,
+  0b0000000000000011,
+  0b0000000000000001,
+};
+```
+
+The order of bits depending on pins in default should be first bit(LSB) as first pin and last bit (MSB) as last pin(not necessarily the bit 16, it could be the bit 10 if you have 10 pins !)
+
+In example if you change idle array like this
+
+```
+const uint16_t idle[] PROGMEM = {
+  0b0000000010101111,
+  };
+```
+
+You should have this(1st led on the right is LSB bit) :
+
+![BARGRAPH_STATIC](https://i.imgur.com/XggEJsm.jpg)
+
+
+
+And if you change idle array like below
+
+```
+const uint16_t idle[] PROGMEM = {
+  0b0100000011111111,
+  0b0100000111111101,
+  0b0100001111111001,
+  0b0100011111110001,
+  0b0100111111100001,
+  0b0101111111000001,
+  0b0111111110000001,
+  0b0101111111000001,
+  0b0100111111100001,
+  0b0100011111110001,
+  0b0100001111111001,
+  0b0100000111111101,
+  };
+```
+
+![BARGRAPH_ANIMATED](https://i.imgur.com/KoFsyLX.gif)
