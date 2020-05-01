@@ -8,23 +8,24 @@ Before using this code :
 
 Ensure you have libraries listed below :
 
--DFPlayer_Mini_Mp3
+-__DFPlayer_Mini_Mp3__
 
 
-BY USING THIS PROJECT, YOU ACCEPT THAT PROTONGAMER IS NOT RESPONSIBLE OF ANY DAMAGE AND YOU
+__BY USING THIS PROJECT, YOU ACCEPT THAT PROTONGAMER IS NOT RESPONSIBLE OF ANY DAMAGE AND YOU
 USING IT AT YOUR OWN RISK ! THIS OPEN SOURCE PROJECT IS A FREE USE AND YOU ACCEPT THAT YOU WILL NOT 
-MAKE ANY PROFITS !
+MAKE ANY PROFITS !__
 
 
 ## Compatible Arduino boards
 
--Arduino Mega 2560
--Other Board Based on ATMega2560
+-__Arduino Mega 2560__
+
+-__Other Board Based on ATMega2560__
 
 
 ## Parameters
 
-You have parameters in the header file parameters.h that you can change to configure the program
+You have parameters in the header file __parameters.h__ that you can change to configure the program
 
 ### DEBUG PARAMETERS
 |   Parameter   |    Range Values    |    Description    |
@@ -86,13 +87,13 @@ You have parameters in the header file parameters.h that you can change to confi
 
 ## Bargraph Animation
 
-You have 2 differents animations, 1 idle animation and 1 firing animation. Idle animation launch only when user don't fire with the Proton Pack. If user start fire, the bargrpah will display a firing animation(depend on parameters used).
+You have 2 differents animations, 1 idle animation and 1 firing animation. Idle animation launch only when user don't fire with the Proton Pack. If user start fire, the bargraph will display a firing animation(depend on parameters used).
 
 How to configure an animation ?
 
 For Idle animation :
 
-Idle animation has one 16 bits type array named "idle" that you can find in bargraph_animation.h. Every bits of the 16 bits type are led state depending by the bargraph pins configured array(that you can find in PROTON_PACK_SIMPLE.ino file).
+Idle animation has one 16 bits type array named "idle" that you can find in __bargraph_animation.h__ . Every bits of the 16 bits type are led state depending by the bargraph pins configured array(that you can find in __PROTON_PACK_SIMPLE.ino__ file).
 
 ``` 
 uint8_t bargraph[] = { B_PIN_1, B_PIN_2, B_PIN_3, B_PIN_4, B_PIN_5, B_PIN_6, B_PIN_7, B_PIN_8, B_PIN_9, B_PIN_10, B_PIN_11, B_PIN_12, B_PIN_13, B_PIN_14, B_PIN_15, }; 
@@ -174,18 +175,18 @@ const uint16_t idle[] PROGMEM = {
 
 
 
-Firing animation has an array named fire[] like idle[] and an another array named fireOH[]
+Firing animation has an array named __fire[]__ like __idle[]__ and an another array named __fireOH[]__
 
-fire[] is the default firing animation, and fireOH[] is the firing animation configured as overheat level.
+__fire[]__ is the default firing animation, and fireOH[] is the firing animation configured as overheat level.
 
-What is the difference between by fire[] and fireOH[] ?
+What is the difference between by __fire[]__ and __fireOH[]__ ?
 
-fire[] array display as an animated frame when user fire. fireOH[] will display the frame according to the overheat level.
+__fire[]__ array display as an animated frame when user fire. __fireOH[]__ will display the frame according to the overheat level.
 
 
-fireOH[] array can be configured like idle[] array. fire[] array can be configured like idle[] array too, but it as a dictionnary that the user can create, and choose it by the parameter ANIMATION_X(see table VARIOUS PARAMETERS above).
+__fireOH[]__ array can be configured like __idle[]__ array. __fire[]__ array can be configured like __idle[]__ array too, but it as a dictionnary that the user can create, and choose it by the parameter __ANIMATION_X__(see __VARIOUS PARAMETERS__ table  above).
 
-To create a new animation, you must create your array named fire[] and set frame to it (of course), and add define conditions, see example below :
+To create a new animation, you must create your array named __fire[]__ and set frame to it (of course), and add define conditions, see example below :
 
 ```
 #if USE_THIS == ANIMATION_4
