@@ -10,10 +10,15 @@ Ensure you have libraries listed below :
 
 -__DFPlayer_Mini_Mp3__
 
+-__softwareSerial__
+
+____________________________________________________________________________________________________
 
 __BY USING THIS PROJECT, YOU ACCEPT THAT PROTONGAMER IS NOT RESPONSIBLE OF ANY DAMAGE AND YOU
 USING IT AT YOUR OWN RISK ! THIS OPEN SOURCE PROJECT IS A FREE USE AND YOU ACCEPT THAT YOU WILL NOT 
 MAKE ANY PROFITS !__
+
+____________________________________________________________________________________________________
 
 
 ## Compatible Arduino boards
