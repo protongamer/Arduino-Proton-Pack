@@ -28,15 +28,21 @@ ________________________________________________________________________________
 -__Other Board Based on ATMega2560__
 
 
+____________________________________________________________________________________________________
+
 ## Parameters
 
 You have parameters in the header file __parameters.h__ that you can change to configure __PROTON_PACK_SIMPLE.ino__
+
+____________________________________________________________________________________________________
 
 ### DEBUG PARAMETERS
 |   Parameter   |    Range Values    |    Description    |
 | ------------- | ------------------ | ----------------- |
 | DEBUG         | Comment / Uncomment | Use debug through Serial USB for miscellaneous instructions |
 | MP3_DEBUG         | Comment / Uncomment | Use debug through Serial USB to print mp3 played files |
+
+____________________________________________________________________________________________________
 
 ### GENERAL TIMING PARAMETERS
 
@@ -46,6 +52,8 @@ You have parameters in the header file __parameters.h__ that you can change to c
 | BARGRAPH_DEFAULT_SPEED | 0-255 | Set Bargraph speed in counts (Low value = High Refresh Speed) |
 | SEER_DEFAULT_SPEED | 0-65535 | Set seers speed in counts (Low value = High Refresh Speed) |
 | FLASH_DEFAULT_SPEED | 0-65535 | Set flash speed in counts (Low value = High Refresh Speed) |
+
+____________________________________________________________________________________________________
 
 
 ### CYCLOTRON PARAMETERS
@@ -64,6 +72,8 @@ You have parameters in the header file __parameters.h__ that you can change to c
 | BLUE_BRIGHT | 0-255 | Set cyclotron's blue color mixing (depending on MAX_BRIGHT value) |
 | CLASSIC_CYCLOTRON_COUNTER_OVERFLOW | 0-65535 | Set speed of main cyclotron's animation in counts (Low value = High Refresh Speed) (CLASSIC MODE ONLY) |
 | DEFAULT_CYCLOTRON_COLOR | RED, GREEN, BLUE, YELLOW, NOCOLOR | Set cyclotron's color (CLASSIC MODE ONLY) |
+
+____________________________________________________________________________________________________
 
 ### VARIOUS PARAMETERS
 
@@ -89,6 +99,8 @@ You have parameters in the header file __parameters.h__ that you can change to c
 | CLOCK_SEERS_1 | 0-65535 | Set blinking seers' speed in count (Low value = High Refresh Speed) |
 | CLOCK_SEERS_2 | 0-65535 | Set overheat seers' speed in count (Low value = High Refresh Speed) |
 | CLOCK_SEERS_3 | 0-65535 | Set Main seers' speed in count (Low value = High Refresh Speed) |
+
+____________________________________________________________________________________________________
 
 ## Bargraph Animation
 
