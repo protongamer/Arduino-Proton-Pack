@@ -25,7 +25,7 @@ MAKE ANY PROFITS !__
 
 ## Parameters
 
-You have parameters in the header file __parameters.h__ that you can change to configure the program
+You have parameters in the header file __parameters.h__ that you can change to configure __PROTON_PACK_SIMPLE.ino__
 
 ### DEBUG PARAMETERS
 |   Parameter   |    Range Values    |    Description    |
