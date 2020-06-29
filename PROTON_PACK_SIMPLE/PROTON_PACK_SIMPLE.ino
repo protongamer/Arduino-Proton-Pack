@@ -159,7 +159,7 @@ void setup() {
     pinMode(specialPins[i], OUTPUT);
   }
   for (uint8_t i = 0; i < sizeof(buttons); i++) {
-    pinMode(buttons[i], INPUT_PULLUP);
+    pinMode(buttons[i], INPUT);
   }
 
   pinMode(MP3_BUSY_PIN, INPUT);
@@ -626,7 +626,7 @@ if(BANK == CLASSIC_BANK){
 void loop() {
 
   //Main process
-  if (!digitalRead(SW1) && !protonActivated) { //turn on proton pack
+  if (digitalRead(SW1) && !protonActivated) { //turn on proton pack
     digitalWrite(S_PIN_2, LOW); //turn off this light
     //enable interrupts
     cli();
@@ -649,7 +649,7 @@ if(BANK == CLASSIC_BANK){
 #endif//ENABLE_BB
     protonActivated = true;
   }
-  if (digitalRead(SW1) && protonActivated) { //turn off proton pack
+  if (!digitalRead(SW1) && protonActivated) { //turn off proton pack
     //disable interrupts
     cli();
     //TCCR5A = 0;
@@ -723,9 +723,9 @@ if(BANK == CLASSIC_BANK){
 
     //add music track here
 
-    if(!digitalRead(BUT1)){
+    if(digitalRead(BUT1)){
       delay(50);
-      while(!digitalRead(BUT1));
+      while(digitalRead(BUT1));
       playFile(TRACK_1);
       TrackPlay = true;
     }
@@ -774,7 +774,7 @@ if(BANK == CLASSIC_BANK){
 
     //add change bank function
     #ifdef ENABLE_BB
-    if(!digitalRead(BUT2)){
+    if(digitalRead(BUT2)){
       playFile(CHANGE_BANK);
       delay(100);
       while(!mp3IsPlaying()); //while mp3 play
@@ -794,13 +794,13 @@ if(BANK == CLASSIC_BANK){
 void classicProtonPack(void) {
 
   if (!blast) {
-    if (!digitalRead(SW2) && !protonArmed) {
+    if (digitalRead(SW2) && !protonArmed) {
       //add sound(here)
       playFile(CLASSIC_PWR_UP);
       protonArmed = true;
     }
 
-    if (digitalRead(SW2) && protonArmed) {
+    if (!digitalRead(SW2) && protonArmed) {
       //add sound(here)
       playFile(CLASSIC_PWR_DOWN);
       protonArmed = false;
@@ -810,13 +810,13 @@ void classicProtonPack(void) {
 
 
 
-  if ((!digitalRead(BUT1) || !digitalRead(BUT2)) && !blast) {
+  if ((digitalRead(BUT1) || digitalRead(BUT2)) && !blast) {
     //add fire sound(here)
     playFile(protonArmed ? CLASSIC_BLAST_1 : CLASSIC_BLAST_2);
     blast = true;
   }
 
-  if (digitalRead(BUT1) && digitalRead(BUT2) && blast) {
+  if (!digitalRead(BUT1) && !digitalRead(BUT2) && blast) {
     //add stop sound(here)
     playFile(protonArmed ? CLASSIC_STOP_1 : CLASSIC_STOP_2);
     blast = false;
@@ -839,7 +839,7 @@ if(overheatLevel < OVERHEAT_THRESHOLD_1){
 }
 
   if (!blast) {
-    if (!digitalRead(SW2) && !protonArmed) {
+    if (digitalRead(SW2) && !protonArmed) {
 
       //add arm sound(here)
       playFile(TVG_BOOT_ON);
@@ -847,7 +847,7 @@ if(overheatLevel < OVERHEAT_THRESHOLD_1){
       protonArmed = true;
     }
 
-    if (digitalRead(SW2) && protonArmed) {
+    if (!digitalRead(SW2) && protonArmed) {
 
       //add safe on sound(here)
       if (overheatLevel > 0) {
@@ -879,7 +879,7 @@ if(overheatLevel < OVERHEAT_THRESHOLD_1){
   }
 
 
-  if (!digitalRead(BUT2)) {//dart blast 
+  if (digitalRead(BUT2)) {//dart blast 
 
     if (protonArmed) {
       //blast dart
@@ -921,7 +921,7 @@ if(overheatLevel < OVERHEAT_THRESHOLD_1){
 
   }
 
-  if (!digitalRead(BUT1) && !blast) { //multi fonction button
+  if (digitalRead(BUT1) && !blast) { //multi fonction button
 
     if (protonArmed) {//normal blast
       //add fire sound(here)
@@ -947,7 +947,7 @@ if(overheatLevel < OVERHEAT_THRESHOLD_1){
 
   }
 
-  if (digitalRead(BUT1) && blast) {
+  if (!digitalRead(BUT1) && blast) {
     //add stop sound(here)
     playFile(range == RED ? TVG_STOP_1 : range == BLUE ? TVG_STOP_2 : range == GREEN ? TVG_STOP_3 : TVG_STOP_4);
     delay(100);
