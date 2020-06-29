@@ -71,6 +71,12 @@
 #define DEFAULT_BLAST_COLOR_1         WHITE
 #define DEFAULT_BLAST_COLOR_2         CLASSIC_COLOR
 
+//for TVG proton pack (TVG_BLAST_TYPE = RGB_BLAST)
+#define DEFAULT_RGB_BLAST_COLOR_1         RED
+#define DEFAULT_RGB_BLAST_COLOR_2         BLUE
+#define DEFAULT_RGB_BLAST_COLOR_3         GREEN
+#define DEFAULT_RGB_BLAST_COLOR_4         YELLOW
+
 
 #define VOLUME                        30
 
