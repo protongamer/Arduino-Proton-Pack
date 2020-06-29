@@ -91,6 +91,10 @@ ________________________________________________________________________________
 | TVG_BLAST_TYPE | RGB_BLAST, COLOR_1_BLAST, COLOR_2_BLAST | Define in TVG Mode a RGB Blast color depend on range selected or a same blast color(whatever of range selected) |
 | DEFAULT_BLAST_COLOR_1 | CLASSIC_COLOR, RED, GREEN, BLUE, YELLOW, WHITE | Define Blast color 1 |
 | DEFAULT_BLAST_COLOR_2 | CLASSIC_COLOR, RED, GREEN, BLUE, YELLOW, WHITE | Define Blast color 2 |
+| DEFAULT_RGB_BLAST_COLOR_1 | CLASSIC_COLOR, RED, GREEN, BLUE, YELLOW, WHITE | Define RGB Blast color 1 |
+| DEFAULT_RGB_BLAST_COLOR_2 | CLASSIC_COLOR, RED, GREEN, BLUE, YELLOW, WHITE | Define RGB Blast color 2 |
+| DEFAULT_RGB_BLAST_COLOR_3 | CLASSIC_COLOR, RED, GREEN, BLUE, YELLOW, WHITE | Define RGB Blast color 3 |
+| DEFAULT_RGB_BLAST_COLOR_4 | CLASSIC_COLOR, RED, GREEN, BLUE, YELLOW, WHITE | Define RGB Blast color 4 |
 | VOLUME | 0-30 | Set Mp3 Dfrobot module Volume |
 | OVERHEAT_THRESHOLD_1 | 40-60(advice) | Set a threshold value that advert user by sending warning sequence (TVG MODE ONLY) |
 | OVERHEAT_THRESHOLD_2 | 70-90(advice) | Set a threshold value that launch overheat sequence (TVG MODE ONLY) |
