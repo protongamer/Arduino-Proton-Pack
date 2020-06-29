@@ -192,7 +192,7 @@ ISR(TIMER5_OVF_vect) {
 #else
 
 #if TVG_BLAST_TYPE == RGB_BLAST
-    blastColor = range;
+    blastColor = (range == RED ? DEFAULT_RGB_BLAST_COLOR_1 : range == BLUE ? DEFAULT_RGB_BLAST_COLOR_2 : range == GREEN ? DEFAULT_RGB_BLAST_COLOR_3 : DEFAULT_RGB_BLAST_COLOR_4);
 #elif TVG_BLAST_TYPE == COLOR_1_BLAST
     blastColor = DEFAULT_BLAST_COLOR_1;
 #elif TVG_BLAST_TYPE == COLOR_2_BLAST
@@ -210,7 +210,7 @@ blastColor = (protonArmed ? DEFAULT_BLAST_COLOR_1 : DEFAULT_BLAST_COLOR_2);
 }else{ //TVG_BANK
 
 #if TVG_BLAST_TYPE == RGB_BLAST
-    blastColor = range;
+    blastColor = (range == RED ? DEFAULT_RGB_BLAST_COLOR_1 : range == BLUE ? DEFAULT_RGB_BLAST_COLOR_2 : range == GREEN ? DEFAULT_RGB_BLAST_COLOR_3 : DEFAULT_RGB_BLAST_COLOR_4);;
 #elif TVG_BLAST_TYPE == COLOR_1_BLAST
     blastColor = DEFAULT_BLAST_COLOR_1;
 #elif TVG_BLAST_TYPE == COLOR_2_BLAST
