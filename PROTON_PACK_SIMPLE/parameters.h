@@ -52,7 +52,7 @@
 #define EXT_CLOCK_COUNTER                   1
 
 
-#define FLASH_BRIGHT                  255
+
 
 
 
@@ -77,8 +77,10 @@
 #define DEFAULT_RGB_BLAST_COLOR_3         GREEN
 #define DEFAULT_RGB_BLAST_COLOR_4         YELLOW
 
+//For blast flash bright
+#define FLASH_BRIGHT                  255
 
-//RGBW Blast Values Primitives
+//RGBW Blast Values Primitives(depend on flash bright)
 #define RED_BLAST_LEVEL         255
 #define GREEN_BLAST_LEVEL       150
 #define BLUE_BLAST_LEVEL        255
