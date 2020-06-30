@@ -84,17 +84,45 @@ ________________________________________________________________________________
 | BARGRAPH_OVERHEAT | CLASSIC_ANIMATION, SPEED_ANIMATION | Define overheat bargraph animation when proton pack goes to heat (TVG MODE ONLY) if CLASSIC_ANIMATION ==> It will use ANIMATION_OH otherwise it will use ANIMATION_X with speed depending on overheat level |
 | ANIMATION_X | ANIMATION_1, ANIMATION_2, ANIMATION_3, ..., ANIMATION_20 | Define bargraph fire animation |
 | EXT_CLOCK_COUNTER | 0-255 | Set External Clock Speed (Low value = High Speed) |
-| FLASH_BRIGHT | 0-255 | Set Max bright value for flasher(blast leds) |
 | FLASH_EFFECT | NORMAL, SOUND_REACT | Define blast effect(normal random flash or flash depending on sound file recorded through ADC) |
 | MIN_VALUE | 0-1023 | Set range of min value(for SOUND_REACT) |
 | MAX_VALUE | 0-1023 | Set range of max value(for SOUND_REACT) |
 | TVG_BLAST_TYPE | RGB_BLAST, COLOR_1_BLAST, COLOR_2_BLAST | Define in TVG Mode a RGB Blast color depend on range selected or a same blast color(whatever of range selected) |
 | DEFAULT_BLAST_COLOR_1 | CLASSIC_COLOR, RED, GREEN, BLUE, YELLOW, WHITE | Define Blast color 1 |
 | DEFAULT_BLAST_COLOR_2 | CLASSIC_COLOR, RED, GREEN, BLUE, YELLOW, WHITE | Define Blast color 2 |
-| DEFAULT_RGB_BLAST_COLOR_1 | CLASSIC_COLOR, RED, GREEN, BLUE, YELLOW, WHITE | Define RGB Blast color 1 |
-| DEFAULT_RGB_BLAST_COLOR_2 | CLASSIC_COLOR, RED, GREEN, BLUE, YELLOW, WHITE | Define RGB Blast color 2 |
-| DEFAULT_RGB_BLAST_COLOR_3 | CLASSIC_COLOR, RED, GREEN, BLUE, YELLOW, WHITE | Define RGB Blast color 3 |
-| DEFAULT_RGB_BLAST_COLOR_4 | CLASSIC_COLOR, RED, GREEN, BLUE, YELLOW, WHITE | Define RGB Blast color 4 |
+| DEFAULT_RGB_BLAST_COLOR_1 | CLASSIC_COLOR, RED, GREEN, BLUE, YELLOW, WHITE, USER1_COLOR, ..., USER5_COLOR | Define RGB Blast color 1 |
+| DEFAULT_RGB_BLAST_COLOR_2 | CLASSIC_COLOR, RED, GREEN, BLUE, YELLOW, WHITE, USER1_COLOR, ..., USER5_COLOR | Define RGB Blast color 2 |
+| DEFAULT_RGB_BLAST_COLOR_3 | CLASSIC_COLOR, RED, GREEN, BLUE, YELLOW, WHITE, USER1_COLOR, ..., USER5_COLOR | Define RGB Blast color 3 |
+| DEFAULT_RGB_BLAST_COLOR_4 | CLASSIC_COLOR, RED, GREEN, BLUE, YELLOW, WHITE, USER1_COLOR, ..., USER5_COLOR | Define RGB Blast color 4 |
+| FLASH_BRIGHT | 0-255 | Set Max bright value for flasher(blast leds) |
+| RED_BLAST_LEVEL | 0-255 | Set Max Bright value of RED_BLAST red color |
+| GREEN_BLAST_LEVEL | 0-255 | Set Max Bright value of GREEN_BLAST green color |
+| BLUE_BLAST_LEVEL | 0-255 | Set Max Bright value of BLUE_BLAST blue color |
+| YELLOW_RED_BLAST_LEVEL | 0-255 | Set Max Bright value of YELLOW_BLAST red color |
+| YELLOW_GREEN_BLAST_LEVEL | 0-255 | Set Max Bright value of YELLOW_BLAST green color |
+| WHITE_BLAST_LEVEL | 0-255 | Set Max Bright value of WHITE_BLAST white color |
+| CLASSIC_RED_BLAST_LEVEL | 0-255 | Set Max Bright value of CLASSIC_BLAST red color |
+| CLASSIC_BLUE_BLAST_LEVEL | 0-255 | Set Max Bright value of CLASSIC_BLAST blue color |
+| USER1_RED_BLAST_LEVEL | 0-255 | Set Max Bright value of USER1_BLAST red color |
+| USER1_GREEN_BLAST_LEVEL | 0-255 | Set Max Bright value of USER1_BLAST green color |
+| USER1_BLUE_BLAST_LEVEL | 0-255 | Set Max Bright value of USER1_BLAST blue color |
+| USER1_WHITE_BLAST_LEVEL | 0-255 | Set Max Bright value of USER1_BLAST white color |
+| USER2_RED_BLAST_LEVEL | 0-255 | Set Max Bright value of USER2_BLAST red color |
+| USER2_GREEN_BLAST_LEVEL | 0-255 | Set Max Bright value of USER2_BLAST green color |
+| USER2_BLUE_BLAST_LEVEL | 0-255 | Set Max Bright value of USER2_BLAST blue color |
+| USER2_WHITE_BLAST_LEVEL | 0-255 | Set Max Bright value of USER2_BLAST white color |
+| USER3_RED_BLAST_LEVEL | 0-255 | Set Max Bright value of USER3_BLAST red color |
+| USER3_GREEN_BLAST_LEVEL | 0-255 | Set Max Bright value of USER3_BLAST green color |
+| USER3_BLUE_BLAST_LEVEL | 0-255 | Set Max Bright value of USER3_BLAST blue color |
+| USER3_WHITE_BLAST_LEVEL | 0-255 | Set Max Bright value of USER3_BLAST white color |
+| USER4_RED_BLAST_LEVEL | 0-255 | Set Max Bright value of USER4_BLAST red color |
+| USER4_GREEN_BLAST_LEVEL | 0-255 | Set Max Bright value of USER4_BLAST green color |
+| USER4_BLUE_BLAST_LEVEL | 0-255 | Set Max Bright value of USER4_BLAST blue color |
+| USER4_WHITE_BLAST_LEVEL | 0-255 | Set Max Bright value of USER4_BLAST white color |
+| USER5_RED_BLAST_LEVEL | 0-255 | Set Max Bright value of USER5_BLAST red color |
+| USER5_GREEN_BLAST_LEVEL | 0-255 | Set Max Bright value of USER5_BLAST green color |
+| USER5_BLUE_BLAST_LEVEL | 0-255 | Set Max Bright value of USER5_BLAST blue color |
+| USER5_WHITE_BLAST_LEVEL | 0-255 | Set Max Bright value of USER5_BLAST white color |
 | VOLUME | 0-30 | Set Mp3 Dfrobot module Volume |
 | OVERHEAT_THRESHOLD_1 | 40-60(advice) | Set a threshold value that advert user by sending warning sequence (TVG MODE ONLY) |
 | OVERHEAT_THRESHOLD_2 | 70-90(advice) | Set a threshold value that launch overheat sequence (TVG MODE ONLY) |
