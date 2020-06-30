@@ -131,6 +131,9 @@ void setup() {
   mp3_play(CHANGE_BANK);
   delay(50);
 #ifdef DEBUG
+  Serial.print(__DATE__);
+  Serial.print("\t");
+  Serial.println(__TIME__);
   Serial.println("Routines Values :");
   Serial.print("fire animation default value : ");
   Serial.println(USE_THIS);
