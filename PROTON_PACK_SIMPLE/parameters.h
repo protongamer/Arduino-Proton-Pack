@@ -78,6 +78,13 @@
 #define DEFAULT_RGB_BLAST_COLOR_4         YELLOW
 
 
+//RGBW Blast Values Primitives
+#define RED_BLAST_LEVEL         255
+#define GREEN_BLAST_LEVEL       150
+#define BLUE_BLAST_LEVEL        255
+#define WHITE_BLAST_LEVEL       255
+
+
 #define VOLUME                        30
 
 #define OVERHEAT_THRESHOLD_1          60          //Warning sequence prefer these values[40~60]
