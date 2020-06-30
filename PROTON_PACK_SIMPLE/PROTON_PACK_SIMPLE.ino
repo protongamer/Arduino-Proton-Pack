@@ -1055,8 +1055,8 @@ void setBlastLeds(uint8_t color) {
 
     case CLASSIC_COLOR:
 
-      analogWrite(F_RED, map(tempFade,0,255,0,RED_BLAST_LEVEL));
-      analogWrite(F_BLUE, map(255 - tempFade, 0, 255, 0, BLUE_BLAST_LEVEL));
+      analogWrite(F_RED, map(tempFade,0,255,0,CLASSIC_RED_BLAST_LEVEL));
+      analogWrite(F_BLUE, map(255 - tempFade, 0, 255, 0, CLASSIC_BLUE_BLAST_LEVEL));
       break;
 
     case RED:
@@ -1072,13 +1072,113 @@ void setBlastLeds(uint8_t color) {
       break;
 
     case YELLOW:
-      analogWrite(F_RED, map(tempFade, 0, 255, 0, RED_BLAST_LEVEL));
-      analogWrite(F_GREEN, map(tempFade, 0, 255, 0, GREEN_BLAST_LEVEL));
+      analogWrite(F_RED, map(tempFade, 0, 255, 0, YELLOW_RED_BLAST_LEVEL));
+      analogWrite(F_GREEN, map(tempFade, 0, 255, 0, YELLOW_GREEN_BLAST_LEVEL));
       break;
 
     case WHITE:
       analogWrite(F_WHITE, map(tempFade, 0, 255, 0, WHITE_BLAST_LEVEL));
       break;
+        
+     case USER1_COLOR:
+       
+        #if USER1_RED_BLAST_LEVEL > 0
+        analogWrite(F_RED, map(tempFade, 0, 255, 0, USER1_RED_BLAST_LEVEL));
+        #endif
+        
+        #if USER1_GREEN_BLAST_LEVEL > 0
+        analogWrite(F_GREEN, map(tempFade, 0, 255, 0, USER1_GREEN_BLAST_LEVEL));
+        #endif
+        
+        #if USER1_BLUE_BLAST_LEVEL > 0
+        analogWrite(F_BLUE, map(tempFade, 0, 255, 0, USER1_BLUE_BLAST_LEVEL));
+        #endif
+        
+        #if USER1_WHITE_BLAST_LEVEL > 0
+        analogWrite(F_WHITE, map(tempFade, 0, 255, 0, USER1_WHITE_BLAST_LEVEL));
+        #endif
+        
+       break;
+        
+        case USER2_COLOR:
+       
+        #if USER2_RED_BLAST_LEVEL > 0
+        analogWrite(F_RED, map(tempFade, 0, 255, 0, USER2_RED_BLAST_LEVEL));
+        #endif
+        
+        #if USER2_GREEN_BLAST_LEVEL > 0
+        analogWrite(F_GREEN, map(tempFade, 0, 255, 0, USER2_GREEN_BLAST_LEVEL));
+        #endif
+        
+        #if USER2_BLUE_BLAST_LEVEL > 0
+        analogWrite(F_BLUE, map(tempFade, 0, 255, 0, USER2_BLUE_BLAST_LEVEL));
+        #endif
+        
+        #if USER2_WHITE_BLAST_LEVEL > 0
+        analogWrite(F_WHITE, map(tempFade, 0, 255, 0, USER2_WHITE_BLAST_LEVEL));
+        #endif
+        
+       break;
+        
+        case USER3_COLOR:
+       
+        #if USER3_RED_BLAST_LEVEL > 0
+        analogWrite(F_RED, map(tempFade, 0, 255, 0, USER3_RED_BLAST_LEVEL));
+        #endif
+        
+        #if USER3_GREEN_BLAST_LEVEL > 0
+        analogWrite(F_GREEN, map(tempFade, 0, 255, 0, USER3_GREEN_BLAST_LEVEL));
+        #endif
+        
+        #if USER3_BLUE_BLAST_LEVEL > 0
+        analogWrite(F_BLUE, map(tempFade, 0, 255, 0, USER3_BLUE_BLAST_LEVEL));
+        #endif
+        
+        #if USER3_WHITE_BLAST_LEVEL > 0
+        analogWrite(F_WHITE, map(tempFade, 0, 255, 0, USER3_WHITE_BLAST_LEVEL));
+        #endif
+        
+       break;
+        
+        case USER4_COLOR:
+       
+        #if USER4_RED_BLAST_LEVEL > 0
+        analogWrite(F_RED, map(tempFade, 0, 255, 0, USER4_RED_BLAST_LEVEL));
+        #endif
+        
+        #if USER4_GREEN_BLAST_LEVEL > 0
+        analogWrite(F_GREEN, map(tempFade, 0, 255, 0, USER4_GREEN_BLAST_LEVEL));
+        #endif
+        
+        #if USER4_BLUE_BLAST_LEVEL > 0
+        analogWrite(F_BLUE, map(tempFade, 0, 255, 0, USER4_BLUE_BLAST_LEVEL));
+        #endif
+        
+        #if USER4_WHITE_BLAST_LEVEL > 0
+        analogWrite(F_WHITE, map(tempFade, 0, 255, 0, USER4_WHITE_BLAST_LEVEL));
+        #endif
+        
+       break;
+        
+        case USER5_COLOR:
+       
+        #if USER5_RED_BLAST_LEVEL > 0
+        analogWrite(F_RED, map(tempFade, 0, 255, 0, USER5_RED_BLAST_LEVEL));
+        #endif
+        
+        #if USER5_GREEN_BLAST_LEVEL > 0
+        analogWrite(F_GREEN, map(tempFade, 0, 255, 0, USER5_GREEN_BLAST_LEVEL));
+        #endif
+        
+        #if USER5_BLUE_BLAST_LEVEL > 0
+        analogWrite(F_BLUE, map(tempFade, 0, 255, 0, USER5_BLUE_BLAST_LEVEL));
+        #endif
+        
+        #if USER5_WHITE_BLAST_LEVEL > 0
+        analogWrite(F_WHITE, map(tempFade, 0, 255, 0, USER5_WHITE_BLAST_LEVEL));
+        #endif
+        
+       break;
 
   }
 
