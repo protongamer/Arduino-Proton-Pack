@@ -1055,29 +1055,29 @@ void setBlastLeds(uint8_t color) {
 
     case CLASSIC_COLOR:
 
-      analogWrite(F_RED, tempFade);
-      analogWrite(F_BLUE, 255 - tempFade);
+      analogWrite(F_RED, map(tempFade,0,255,0,RED_BLAST_LEVEL));
+      analogWrite(F_BLUE, map(255 - tempFade, 0, 255, 0, BLUE_BLAST_LEVEL));
       break;
 
     case RED:
-      analogWrite(F_RED, tempFade);
+      analogWrite(F_RED, map(tempFade, 0, 255, 0, RED_BLAST_LEVEL));
       break;
 
     case GREEN:
-      analogWrite(F_GREEN, tempFade);
+      analogWrite(F_GREEN, map(tempFade, 0, 255, 0, GREEN_BLAST_LEVEL));
       break;
 
     case BLUE:
-      analogWrite(F_BLUE, tempFade);
+      analogWrite(F_BLUE, map(tempFade, 0, 255, 0, BLUE_BLAST_LEVEL));
       break;
 
     case YELLOW:
-      analogWrite(F_RED, tempFade);
-      analogWrite(F_GREEN, tempFade);
+      analogWrite(F_RED, map(tempFade, 0, 255, 0, RED_BLAST_LEVEL));
+      analogWrite(F_GREEN, map(tempFade, 0, 255, 0, GREEN_BLAST_LEVEL));
       break;
 
     case WHITE:
-      analogWrite(F_WHITE, tempFade);
+      analogWrite(F_WHITE, map(tempFade, 0, 255, 0, WHITE_BLAST_LEVEL));
       break;
 
   }
