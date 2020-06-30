@@ -6,6 +6,15 @@
 #define YELLOW         4
 #define WHITE          5
 #define NOCOLOR        6
+#define USER1_CCOLOR   7
+#define USER2_CCOLOR   8
+#define USER3_CCOLOR   9
+#define USER4_CCOLOR   10
+#define USER5_CCOLOR   11
+#define USER6_CCOLOR   12
+#define USER7_CCOLOR   13
+#define USER8_CCOLOR   14
+#define USER9_CCOLOR   15
 
 //animations
 #define ANIMATION_1         0
