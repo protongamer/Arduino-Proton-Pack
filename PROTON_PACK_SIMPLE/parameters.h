@@ -41,6 +41,9 @@
 //Use Classic and TVG Banks with dynamic change feature
 #define ENABLE_BOTH_BANKS
 
+//Use Hybride program than the video game program (NEED AT LEAST "ENABLE_TVG_BANK" PARAMETER ENABLED !!!!)
+#define ENABLE_HYBRIDE
+
 
 //if the video game program, accurate overheat animation bargraph ?
 #define BARGRAPH_OVERHEAT     CLASSIC_ANIMATION
@@ -52,7 +55,7 @@
 #define EXT_CLOCK_COUNTER                   1
 
 
-
+#define FLASH_BRIGHT                  255
 
 
 
@@ -70,73 +73,6 @@
 //for classic proton pack or TVG_BLAST_TYPE COLOR_X_BLAST
 #define DEFAULT_BLAST_COLOR_1         WHITE
 #define DEFAULT_BLAST_COLOR_2         CLASSIC_COLOR
-
-//for TVG proton pack (TVG_BLAST_TYPE = RGB_BLAST)
-#define DEFAULT_RGB_BLAST_COLOR_1         RED
-#define DEFAULT_RGB_BLAST_COLOR_2         BLUE
-#define DEFAULT_RGB_BLAST_COLOR_3         GREEN
-#define DEFAULT_RGB_BLAST_COLOR_4         YELLOW
-
-////////////////////////////////////////////////////////////
-//BLAST COLOR PART
-
-//For blast flash bright
-#define FLASH_BRIGHT                  255
-
-//RGBW Blast Values Primitives(depend on flash bright)
-
-//RED BLAST
-#define RED_BLAST_LEVEL         255
-
-//GREEN BLAST
-#define GREEN_BLAST_LEVEL         255
-
-//BLUE BLAST
-#define BLUE_BLAST_LEVEL       255
-
-//YELLOW BLAST
-#define YELLOW_RED_BLAST_LEVEL       255
-#define YELLOW_GREEN_BLAST_LEVEL       128
-
-//WHITE BLAST
-#define WHITE_BLAST_LEVEL       255
-
-//CLASSIC BLAST
-#define CLASSIC_RED_BLAST_LEVEL       255
-#define CLASSIC_BLUE_BLAST_LEVEL       255
-
-//USER 1 BLAST
-#define USER1_RED_BLAST_LEVEL       255
-#define USER1_GREEN_BLAST_LEVEL       255
-#define USER1_BLUE_BLAST_LEVEL       255
-#define USER1_WHITE_BLAST_LEVEL       255
-
-//USER 2 BLAST
-#define USER2_RED_BLAST_LEVEL       255
-#define USER2_GREEN_BLAST_LEVEL       255
-#define USER2_BLUE_BLAST_LEVEL       255
-#define USER2_WHITE_BLAST_LEVEL       255
-
-//USER 3 BLAST
-#define USER3_RED_BLAST_LEVEL       255
-#define USER3_GREEN_BLAST_LEVEL       255
-#define USER3_BLUE_BLAST_LEVEL       255
-#define USER3_WHITE_BLAST_LEVEL       255
-
-//USER 4 BLAST
-#define USER4_RED_BLAST_LEVEL       255
-#define USER4_GREEN_BLAST_LEVEL       255
-#define USER4_BLUE_BLAST_LEVEL       255
-#define USER4_WHITE_BLAST_LEVEL       255
-
-//USER 5 BLAST
-#define USER5_RED_BLAST_LEVEL       255
-#define USER5_GREEN_BLAST_LEVEL       255
-#define USER5_BLUE_BLAST_LEVEL       255
-#define USER5_WHITE_BLAST_LEVEL       255
-
-
-//////////////////////////////////////////////////////////////
 
 
 #define VOLUME                        30
