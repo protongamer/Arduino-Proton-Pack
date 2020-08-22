@@ -78,6 +78,7 @@
 //Miscellaneous
 #define MP3_BUSY_PIN      39
 #define SOUND_PIN         A15
+#define BLAST_RELAY       40
 
 
 
