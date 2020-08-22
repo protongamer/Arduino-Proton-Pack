@@ -4,7 +4,7 @@
 /* TODO LIST :
 
    -Maybe add more tracks
-   
+
 
 */
 
@@ -34,7 +34,7 @@ uint8_t bargraph[] = { B_PIN_1, B_PIN_2, B_PIN_3, B_PIN_4, B_PIN_5, B_PIN_6, B_P
 uint8_t cyclotron[] = { C_PIN_1, C_PIN_2, C_PIN_3, C_PIN_4,};
 uint8_t colorFilter[] = { C_RED, C_GREEN, C_BLUE, };
 uint8_t seers[] = { S_PIN_1, S_PIN_2, S_PIN_3, S_PIN_4, S_PIN_5, S_PIN_6, };
-uint8_t specialPins[] = { S_RELAY_PIN, S_LED_PIN, EXT_CLOCK, };
+uint8_t specialPins[] = { S_RELAY_PIN, S_LED_PIN, EXT_CLOCK, BLAST_RELAY};
 uint8_t buttons[] = { BUT1, BUT2, SW1, SW2, };
 
 
@@ -112,6 +112,7 @@ void setCyclotron(uint8_t leds, uint8_t color);
 void setSeers(uint8_t leds);
 void setBlastLeds(uint8_t color);
 void classicProtonPack(void);
+void HybrideProtonPack(void);
 void TVGProtonPack(void);
 void playFile(uint8_t FILE_N);
 bool mp3IsPlaying(void);
@@ -131,9 +132,6 @@ void setup() {
   mp3_play(CHANGE_BANK);
   delay(50);
 #ifdef DEBUG
-  Serial.print(__DATE__);
-  Serial.print("\t");
-  Serial.println(__TIME__);
   Serial.println("Routines Values :");
   Serial.print("fire animation default value : ");
   Serial.println(USE_THIS);
@@ -185,6 +183,8 @@ ISR(TIMER5_OVF_vect) {
   //blast part
   counterTimeFlasher++;
 
+  digitalWrite(BLAST_RELAY, blast);
+  
   if (blast) {
 
 
@@ -195,7 +195,7 @@ ISR(TIMER5_OVF_vect) {
 #else
 
 #if TVG_BLAST_TYPE == RGB_BLAST
-    blastColor = (range == RED ? DEFAULT_RGB_BLAST_COLOR_1 : range == BLUE ? DEFAULT_RGB_BLAST_COLOR_2 : range == GREEN ? DEFAULT_RGB_BLAST_COLOR_3 : DEFAULT_RGB_BLAST_COLOR_4);
+    blastColor = range;
 #elif TVG_BLAST_TYPE == COLOR_1_BLAST
     blastColor = DEFAULT_BLAST_COLOR_1;
 #elif TVG_BLAST_TYPE == COLOR_2_BLAST
@@ -206,21 +206,21 @@ ISR(TIMER5_OVF_vect) {
 
 #else //ENABLE_BB
 
-if(BANK == CLASSIC_BANK){
+    if (BANK == CLASSIC_BANK) {
 
-blastColor = (protonArmed ? DEFAULT_BLAST_COLOR_1 : DEFAULT_BLAST_COLOR_2);
+      blastColor = (protonArmed ? DEFAULT_BLAST_COLOR_1 : DEFAULT_BLAST_COLOR_2);
 
-}else{ //TVG_BANK
+    } else { //TVG_BANK
 
 #if TVG_BLAST_TYPE == RGB_BLAST
-    blastColor = (range == RED ? DEFAULT_RGB_BLAST_COLOR_1 : range == BLUE ? DEFAULT_RGB_BLAST_COLOR_2 : range == GREEN ? DEFAULT_RGB_BLAST_COLOR_3 : DEFAULT_RGB_BLAST_COLOR_4);;
+      blastColor = range;
 #elif TVG_BLAST_TYPE == COLOR_1_BLAST
-    blastColor = DEFAULT_BLAST_COLOR_1;
+      blastColor = DEFAULT_BLAST_COLOR_1;
 #elif TVG_BLAST_TYPE == COLOR_2_BLAST
-    blastColor = DEFAULT_BLAST_COLOR_2;
+      blastColor = DEFAULT_BLAST_COLOR_2;
 #endif
-  
-}
+
+    }
 
 #endif
 
@@ -274,7 +274,7 @@ blastColor = (protonArmed ? DEFAULT_BLAST_COLOR_1 : DEFAULT_BLAST_COLOR_2);
     //update bargraph
 
     if (blast) { //if rookie fire
-      
+
 #ifndef ENABLE_BB //not defined
 
 #ifndef ENABLE_TVG //CLASSIC
@@ -301,7 +301,7 @@ blastColor = (protonArmed ? DEFAULT_BLAST_COLOR_1 : DEFAULT_BLAST_COLOR_2);
       Serial.print("OV_LVL STATUS : ");
       Serial.println(map(overheatLevel, 0, OVERHEAT_THRESHOLD_2, 0, (sizeof(fire) / sizeof(fire[0]))));
 #endif
-      setBargraph(fire, map(overheatLevel, 0, OVERHEAT_THRESHOLD_2, 0, (sizeof(fireOH) / sizeof(fireOH[0]))-1));
+      setBargraph(fire, map(overheatLevel, 0, OVERHEAT_THRESHOLD_2, 0, (sizeof(fireOH) / sizeof(fireOH[0])) - 1));
 
 #endif //BARGRAPH_OVERHEAT == SPEED_ANIMATION
 
@@ -310,35 +310,35 @@ blastColor = (protonArmed ? DEFAULT_BLAST_COLOR_1 : DEFAULT_BLAST_COLOR_2);
 
 #else //ENABLE_BB
 
-if(BANK == CLASSIC_BANK){
-      setBargraph(fire, barC);
-      barC++;
-      if (barC >= sizeof(fire) / sizeof(fire[0])) {
-        barC = 0;
-      }
+      if (BANK == CLASSIC_BANK) {
+        setBargraph(fire, barC);
+        barC++;
+        if (barC >= sizeof(fire) / sizeof(fire[0])) {
+          barC = 0;
+        }
 
-}else{
+      } else {
 
 
 #if BARGRAPH_OVERHEAT == SPEED_ANIMATION
 
-      setBargraph(fire, barC);
-      barC++;
-      if (barC >= sizeof(fire) / sizeof(fire[0])) {
-        barC = 0;
-      }
+        setBargraph(fire, barC);
+        barC++;
+        if (barC >= sizeof(fire) / sizeof(fire[0])) {
+          barC = 0;
+        }
 #else //TVG
 
 
 #if DEBUG
-      Serial.print("OV_LVL STATUS : ");
-      Serial.println(map(overheatLevel, 0, OVERHEAT_THRESHOLD_2, 0, (sizeof(fireOH) / sizeof(fireOH[0]))-1));
+        Serial.print("OV_LVL STATUS : ");
+        Serial.println(map(overheatLevel, 0, OVERHEAT_THRESHOLD_2, 0, (sizeof(fireOH) / sizeof(fireOH[0])) - 1));
 #endif
-      setBargraph(fireOH, map(overheatLevel, 0, OVERHEAT_THRESHOLD_2, 0, (sizeof(fireOH) / sizeof(fireOH[0]))-1));
+        setBargraph(fireOH, map(overheatLevel, 0, OVERHEAT_THRESHOLD_2, 0, (sizeof(fireOH) / sizeof(fireOH[0])) - 1));
 
 #endif //BARGRAPH_OVERHEAT == SPEED_ANIMATION
 
-}
+      }
 
 
 #endif //ENABLE_BB
@@ -398,44 +398,44 @@ if(BANK == CLASSIC_BANK){
 
 #else //ENABLE_BB defined
 
-if(BANK == CLASSIC_BANK){
-      setBargraph(idle, barC);
-      barC++;
-      if (barC >= sizeof(idle) / sizeof(idle[0])) {
-        barC = 0;
-      }
-
-}else{
-
-#if BARGRAPH_OVERHEAT == CLASSIC_ANIMATION
-
-      //accurate animation
-      if (overheatLevel <= 0) {
+      if (BANK == CLASSIC_BANK) {
         setBargraph(idle, barC);
         barC++;
         if (barC >= sizeof(idle) / sizeof(idle[0])) {
           barC = 0;
         }
+
       } else {
 
+#if BARGRAPH_OVERHEAT == CLASSIC_ANIMATION
+
+        //accurate animation
+        if (overheatLevel <= 0) {
+          setBargraph(idle, barC);
+          barC++;
+          if (barC >= sizeof(idle) / sizeof(idle[0])) {
+            barC = 0;
+          }
+        } else {
+
 #if DEBUG
-        Serial.print("OV_LVL STATUS : ");
-        Serial.println(map(overheatLevel, 0, 100, 0, (sizeof(fireOH) / sizeof(fireOH[0])) - 1));
+          Serial.print("OV_LVL STATUS : ");
+          Serial.println(map(overheatLevel, 0, 100, 0, (sizeof(fireOH) / sizeof(fireOH[0])) - 1));
 #endif
-        setBargraph(fireOH, map(overheatLevel, 0, 100, 0, (sizeof(fireOH) / sizeof(fireOH[0])) - 1));
-      }
+          setBargraph(fireOH, map(overheatLevel, 0, 100, 0, (sizeof(fireOH) / sizeof(fireOH[0])) - 1));
+        }
 
 #else //BARGRAPH_OVERHEAT
-      //speed animation
-      setBargraph(idle, barC);
-      barC++;
-      if (barC >= sizeof(idle) / sizeof(idle[0])) {
-        barC = 0;
-      }
+        //speed animation
+        setBargraph(idle, barC);
+        barC++;
+        if (barC >= sizeof(idle) / sizeof(idle[0])) {
+          barC = 0;
+        }
 
 #endif//BARGRAPH_OVERHEAT
 
-}
+      }
 
 #endif //ENABLE_BB
 
@@ -487,32 +487,32 @@ if(BANK == CLASSIC_BANK){
 
 #else //ENABLE_BB
 
-if(BANK == CLASSIC_BANK){
-  counterTimeCyclotron++;
-  if (counterTimeCyclotron > CLASSIC_CYCLOTRON_COUNTER_OVERFLOW) {
-    setCyclotron(cycC, CLASSIC_COLOR);
-    cycC++;
-    if (cycC >= sizeof(cyclotron)) { //ensure to not overflow cyclotron array
-      cycC = 0;//reset counter
+  if (BANK == CLASSIC_BANK) {
+    counterTimeCyclotron++;
+    if (counterTimeCyclotron > CLASSIC_CYCLOTRON_COUNTER_OVERFLOW) {
+      setCyclotron(cycC, CLASSIC_COLOR);
+      cycC++;
+      if (cycC >= sizeof(cyclotron)) { //ensure to not overflow cyclotron array
+        cycC = 0;//reset counter
+      }
+      counterTimeCyclotron = 0;
     }
-    counterTimeCyclotron = 0;
-  }
-}else{
-  counterTimeCyclotron++;
-  if (counterTimeCyclotron > TVG_CYCLOTRON_COUNTER_OVERFLOW  - map(overheatLevel, 0, 100, 0, TVG_CYCLOTRON_COUNTER_OVERFLOW)) {
-    cycC++;
-    if (cycC >= 4) {
-      cycC = 0;
+  } else {
+    counterTimeCyclotron++;
+    if (counterTimeCyclotron > TVG_CYCLOTRON_COUNTER_OVERFLOW  - map(overheatLevel, 0, 100, 0, TVG_CYCLOTRON_COUNTER_OVERFLOW)) {
+      cycC++;
+      if (cycC >= 4) {
+        cycC = 0;
+      }
+      counterTimeCyclotron = 0;
     }
-    counterTimeCyclotron = 0;
-  }
 
-  if (counterTimeBright > TVG_CYCLOTRON_COUNTER_BRIGHT) {
-    setCyclotron(cycC, range);
-    counterTimeBright = 0;
+    if (counterTimeBright > TVG_CYCLOTRON_COUNTER_BRIGHT) {
+      setCyclotron(cycC, range);
+      counterTimeBright = 0;
+    }
+    counterTimeBright++;
   }
-  counterTimeBright++;
-}
 
 #endif //ENABLE_BB
 
@@ -555,16 +555,16 @@ if(BANK == CLASSIC_BANK){
 
 #else //ENABLE_BB
 
-if(BANK == CLASSIC_BANK){
+      if (BANK == CLASSIC_BANK) {
 
-      sLedW = !sLedW;
-
-    }else{
-
-      if (overheatLevel > OVERHEAT_THRESHOLD_1) {
         sLedW = !sLedW;
+
+      } else {
+
+        if (overheatLevel > OVERHEAT_THRESHOLD_1) {
+          sLedW = !sLedW;
+        }
       }
-    }
 
 #endif //ENABLE_BB
 
@@ -642,13 +642,13 @@ void loop() {
     playFile(CLASSIC_BOOT_ON);
 #else
     playFile(TVG_BOOT_ON);
-#endif 
+#endif
 #else //ENABLE_BB
-if(BANK == CLASSIC_BANK){
-  playFile(CLASSIC_BOOT_ON);
-}else{
-  playFile(TVG_BOOT_ON);
-}
+    if (BANK == CLASSIC_BANK) {
+      playFile(CLASSIC_BOOT_ON);
+    } else {
+      playFile(TVG_BOOT_ON);
+    }
 #endif//ENABLE_BB
     protonActivated = true;
   }
@@ -689,11 +689,11 @@ if(BANK == CLASSIC_BANK){
     playFile(TVG_BOOT_OFF);
 #endif
 #else //ENABLE_BB
-if(BANK == CLASSIC_BANK){
-  playFile(CLASSIC_BOOT_OFF);
-}else{
-  playFile(TVG_BOOT_OFF);
-}
+    if (BANK == CLASSIC_BANK) {
+      playFile(CLASSIC_BOOT_OFF);
+    } else {
+      playFile(TVG_BOOT_OFF);
+    }
 #endif //ENABLE_BB
     //add pack off sound(here)
     protonActivated = false;
@@ -707,14 +707,22 @@ if(BANK == CLASSIC_BANK){
 #ifndef ENABLE_TVG //classic proton pack program
     classicProtonPack();
 #else //the video game proton pack program
+#ifndef ENABLE_HYBRIDE
     TVGProtonPack();
+#else
+    HybrideProtonPack();
+#endif
 #endif
 #else //ENABLE_BB
-if(BANK == CLASSIC_BANK){
-  classicProtonPack();
-}else{
-  TVGProtonPack();
-}
+    if (BANK == CLASSIC_BANK) {
+      classicProtonPack();
+    } else {
+#ifndef ENABLE_HYBRIDE
+      TVGProtonPack();
+#else
+      HybrideProtonPack();
+#endif
+    }
 #endif //ENABLE_BB
 
 
@@ -726,64 +734,64 @@ if(BANK == CLASSIC_BANK){
 
     //add music track here
 
-    if(digitalRead(BUT1)){
+    if (digitalRead(BUT1)) {
       delay(50);
-      while(digitalRead(BUT1));
+      while (digitalRead(BUT1));
       playFile(TRACK_1);
       TrackPlay = true;
     }
 
-    if(!mp3IsPlaying() && TrackPlay){
-      
-    uint16_t vuMeter = 20*log(analogRead(SOUND_PIN));
-    Serial.println(vuMeter);
-    vuMeter = constrain(vuMeter, MIN_VALUE, MAX_VALUE);
-    vuMeter = map(vuMeter,MIN_VALUE,MAX_VALUE,0,(sizeof(fireOH)/sizeof(fireOH[0]))-1);
+    if (!mp3IsPlaying() && TrackPlay) {
+
+      uint16_t vuMeter = 20 * log(analogRead(SOUND_PIN));
+      Serial.println(vuMeter);
+      vuMeter = constrain(vuMeter, MIN_VALUE, MAX_VALUE);
+      vuMeter = map(vuMeter, MIN_VALUE, MAX_VALUE, 0, (sizeof(fireOH) / sizeof(fireOH[0])) - 1);
       setBargraph(fireOH, vuMeter);
       setPowercell(pgm_read_word(&fireOH[vuMeter]));
       for (uint8_t i = 0; i < sizeof(cyclotron); i++) {
-      //digitalWrite(cyclotron[i], LOW);
-      
-      #if DEFAULT_CYCLOTRON_COLOR == RED
-    analogWrite(C_RED, MAX_BRIGHT);
-    #elif DEFAULT_CYCLOTRON_COLOR == GREEN
-    analogWrite(C_GREEN, MAX_BRIGHT);
-    #elif DEFAULT_CYCLOTRON_COLOR == BLUE
-    analogWrite(C_BLUE, MAX_BRIGHT);
-    #elif DEFAULT_CYCLOTRON_COLOR == YELLOW
-    analogWrite(C_RED, MAX_BRIGHT);
-    analogWrite(C_GREEN, MAX_BRIGHT);
-    #elif DEFAULT_CYCLOTRON_COLOR == PURPLE
-    analogWrite(C_RED, MAX_BRIGHT);
-    analogWrite(C_BLUE, MAX_BRIGHT);
-    #elif DEFAULT_CYCLOTRON_COLOR == CYAN
-    analogWrite(C_GREEN, MAX_BRIGHT);
-    analogWrite(C_BLUE, MAX_BRIGHT);
-    #elif DEFAULT_CYCLOTRON_COLOR == WHITE
-    analogWrite(C_RED, MAX_BRIGHT);
-    analogWrite(C_GREEN, MAX_BRIGHT);
-    analogWrite(C_BLUE, MAX_BRIGHT);
-    #endif
-    
-      analogWrite(cyclotron[i] , map(vuMeter,0,(sizeof(fireOH)/sizeof(fireOH[0]))-1,0,MAX_BRIGHT));
+        //digitalWrite(cyclotron[i], LOW);
+
+#if DEFAULT_CYCLOTRON_COLOR == RED
+        analogWrite(C_RED, MAX_BRIGHT);
+#elif DEFAULT_CYCLOTRON_COLOR == GREEN
+        analogWrite(C_GREEN, MAX_BRIGHT);
+#elif DEFAULT_CYCLOTRON_COLOR == BLUE
+        analogWrite(C_BLUE, MAX_BRIGHT);
+#elif DEFAULT_CYCLOTRON_COLOR == YELLOW
+        analogWrite(C_RED, MAX_BRIGHT);
+        analogWrite(C_GREEN, MAX_BRIGHT);
+#elif DEFAULT_CYCLOTRON_COLOR == PURPLE
+        analogWrite(C_RED, MAX_BRIGHT);
+        analogWrite(C_BLUE, MAX_BRIGHT);
+#elif DEFAULT_CYCLOTRON_COLOR == CYAN
+        analogWrite(C_GREEN, MAX_BRIGHT);
+        analogWrite(C_BLUE, MAX_BRIGHT);
+#elif DEFAULT_CYCLOTRON_COLOR == WHITE
+        analogWrite(C_RED, MAX_BRIGHT);
+        analogWrite(C_GREEN, MAX_BRIGHT);
+        analogWrite(C_BLUE, MAX_BRIGHT);
+#endif
+
+        analogWrite(cyclotron[i] , map(vuMeter, 0, (sizeof(fireOH) / sizeof(fireOH[0])) - 1, 0, MAX_BRIGHT));
       }
-    }else{
-      setBargraph(fireOH,0);
+    } else {
+      setBargraph(fireOH, 0);
       setPowercell(0);
-      analogWrite(C_RED,0);
-      analogWrite(C_GREEN,0);
-      analogWrite(C_BLUE,0);
+      analogWrite(C_RED, 0);
+      analogWrite(C_GREEN, 0);
+      analogWrite(C_BLUE, 0);
     }
 
     //add change bank function
-    #ifdef ENABLE_BB
-    if(digitalRead(BUT2)){
+#ifdef ENABLE_BB
+    if (digitalRead(BUT2)) {
       playFile(CHANGE_BANK);
       delay(100);
-      while(!mp3IsPlaying()); //while mp3 play
+      while (!mp3IsPlaying()); //while mp3 play
       BANK = !BANK;
     }
-   #endif
+#endif
   }
 
 }
@@ -834,12 +842,233 @@ void classicProtonPack(void) {
 
 ///////////////////////////////////////////////////////////
 //TVG program
+
+
+
+void HybrideProtonPack(void) {
+
+
+  if (overheatLevel < OVERHEAT_THRESHOLD_1) {
+    sLedW = 0;
+  }
+
+  if (!blast) {
+    if (digitalRead(SW2) && !protonArmed) {
+
+      //add arm sound(here)
+      //playFile(TVG_BOOT_ON);
+      //delay(100);
+      protonArmed = true;
+    }
+
+    if (!digitalRead(SW2) && protonArmed) {
+      protonArmed = false;
+    }
+
+  }
+
+
+  //add loop sound if proton armed and no shoot
+  if (protonArmed && !blast) {
+    if (mp3IsPlaying()) { //if player don't play
+      //play loop hum according range
+      playFile(TVG_LOOP_1);
+      delay(100);
+    }
+  }
+
+
+
+  //UNUSED
+  /* if (digitalRead(BUT2)) {//dart blast
+
+     if (protonArmed) {
+       //blast dart
+       overheatLevel += DART_OV_INCREMENT;
+       if (overheatLevel >= OVERHEAT_THRESHOLD_2) {
+         //Overheat Sequence
+         overheatLevel = OVERHEAT_THRESHOLD_2;
+
+         playFile(range == RED ? TVG_BLAST_1B_OV : range == BLUE ? TVG_BLAST_2B_OV : range == GREEN ? TVG_BLAST_3B_OV : TVG_BLAST_4B_OV);
+         delay(100);
+         while (!mp3IsPlaying()); //wait for play finished
+
+         playFile(TVG_OVERHEAT);
+         digitalWrite(S_LED_PIN, HIGH);
+         delay(START_SMOKE_DELAY + 100);
+
+         while (!mp3IsPlaying()) { //wait for play finished
+           if (overheatLevel > 1) {
+             digitalWrite(S_RELAY_PIN, HIGH);
+             overheatLevel--;
+             delay(10);
+           } else {
+             digitalWrite(S_RELAY_PIN, LOW);
+           }
+         }
+
+         //Once sequence finished
+         digitalWrite(S_LED_PIN, LOW);
+         overheatLevel = 0;
+
+       } else {
+         playFile(range == RED ? TVG_BLAST_1B : range == BLUE ? TVG_BLAST_2B : range == GREEN ? TVG_BLAST_3B : TVG_BLAST_4B);
+       }
+       blast = true;
+       delay(250);
+       blast = false;
+       delay(1000);
+     }
+
+    }*/
+
+  if (digitalRead(BUT1) && !blast) { //multi fonction button
+
+    if (protonArmed) {//normal blast
+      //add fire sound(here)
+      playFile(TVG_BLAST_1A);
+      blast = true;
+      delay(1000);
+    }
+
+  }
+
+  if (!digitalRead(BUT1) && blast) {
+    //add stop sound(here)
+    playFile(TVG_STOP_1);
+    delay(100);
+    blast = false;
+  }
+
+
+  if (digitalRead(BUT2) && !blast) { //multi fonction button
+
+    if (protonArmed) {//normal blast
+      //add fire sound(here)
+      playFile(TVG_BLAST_2A);
+      blast = true;
+      delay(1000);
+
+    } else { //refresh sequence
+
+      //add safe on sound(here)
+      if (overheatLevel > 0) {
+        playFile(TVG_PCK_VENT);
+        digitalWrite(S_LED_PIN, HIGH);
+        while (overheatLevel > 0) {
+          overheatLevel--;
+          delay(10);
+        }
+        digitalWrite(S_LED_PIN, LOW);
+        overheatLevel = 0;
+      } else {
+        playFile(TVG_DRY_VENT);
+      }
+
+
+    }
+
+  }
+
+  if (!digitalRead(BUT2) && blast) {
+    //add stop sound(here)
+    playFile(TVG_STOP_2);
+    delay(100);
+    blast = false;
+  }
+
+  //UNUSED
+  /*else { //if not of course change range
+
+
+    uint8_t tempRange = range;
+    tempRange++;
+    if (tempRange > 4) {
+      tempRange = 1;
+    }
+    playFile(tempRange == RED ? TVG_RANGE_1 : tempRange == BLUE ? TVG_RANGE_2 : tempRange == GREEN ? TVG_RANGE_3 : TVG_RANGE_4);
+    delay(100);
+    range = NOCOLOR;
+    while(!mp3IsPlaying()); //wait for sound finished
+    range  = tempRange;
+    delay(100);
+    }//end of range select
+  */
+
+
+
+
+  if (blast) { //if blast(BLAST_XA)
+
+    if (millis() - timerOverheat > 250) {
+      overheatLevel++;
+      timerOverheat = millis();
+    }
+
+    if (overheatLevel > OVERHEAT_THRESHOLD_1 && !startOvSound) {
+      playFile(TVG_BLAST_1A_OV);
+      delay(100);
+      startOvSound = true;
+    }
+
+    if (overheatLevel > OVERHEAT_THRESHOLD_2) { //start overheat sequence(here)
+      //overheatLevel = OVERHEAT_THRESHOLD_2;
+      //Overheat Sequence
+      playFile(TVG_STOP_1_OV);
+      blast = false;
+      delay(100);
+      while (!mp3IsPlaying());
+      playFile(TVG_OVERHEAT);
+      digitalWrite(S_LED_PIN, HIGH);
+      delay(START_SMOKE_DELAY + 100);
+
+      while (!mp3IsPlaying()) { //wait for play finished
+        if (overheatLevel > 1) {
+          digitalWrite(S_RELAY_PIN, HIGH);
+          overheatLevel--;
+          delay(10);
+        } else {
+          digitalWrite(S_RELAY_PIN, LOW);
+        }
+      }
+
+      //Once sequence finished
+      digitalWrite(S_LED_PIN, LOW);
+      overheatLevel = 0;
+    }
+
+  } else {
+
+    startOvSound = false;
+
+    if (millis() - timerOverheat > 1000) {
+      overheatLevel--;
+      timerOverheat = millis();
+    }
+
+
+
+    if (overheatLevel < 0) {
+      overheatLevel = 0;
+    }
+
+  }
+
+
+
+}
+
+
+
+
+
+
 void TVGProtonPack(void) {
 
 
-if(overheatLevel < OVERHEAT_THRESHOLD_1){
-  sLedW = 0;
-}
+  if (overheatLevel < OVERHEAT_THRESHOLD_1) {
+    sLedW = 0;
+  }
 
   if (!blast) {
     if (digitalRead(SW2) && !protonArmed) {
@@ -873,8 +1102,8 @@ if(overheatLevel < OVERHEAT_THRESHOLD_1){
 
 
   //add loop sound if proton armed and no shoot
-  if(protonArmed && !blast){
-    if(mp3IsPlaying()){ //if player don't play
+  if (protonArmed && !blast) {
+    if (mp3IsPlaying()) { //if player don't play
       //play loop hum according range
       playFile(range == RED ? TVG_LOOP_1 : range == BLUE ? TVG_LOOP_2 : range == GREEN ? TVG_LOOP_3 : TVG_LOOP_4);
       delay(100);
@@ -882,39 +1111,39 @@ if(overheatLevel < OVERHEAT_THRESHOLD_1){
   }
 
 
-  if (digitalRead(BUT2)) {//dart blast 
+  if (digitalRead(BUT2)) {//dart blast
 
     if (protonArmed) {
       //blast dart
       overheatLevel += DART_OV_INCREMENT;
-      if(overheatLevel >= OVERHEAT_THRESHOLD_2){
-      //Overheat Sequence
-      overheatLevel = OVERHEAT_THRESHOLD_2;
-      
-      playFile(range == RED ? TVG_BLAST_1B_OV : range == BLUE ? TVG_BLAST_2B_OV : range == GREEN ? TVG_BLAST_3B_OV : TVG_BLAST_4B_OV);
-      delay(100);
-      while(!mp3IsPlaying()); //wait for play finished
-      
-      playFile(TVG_OVERHEAT);
-      digitalWrite(S_LED_PIN, HIGH);
-      delay(START_SMOKE_DELAY+100);
-      
-      while(!mp3IsPlaying()){//wait for play finished
-      if(overheatLevel > 1) {
-      digitalWrite(S_RELAY_PIN, HIGH);
-      overheatLevel--;
-      delay(10);
-      }else{
-      digitalWrite(S_RELAY_PIN, LOW);  
-      }
-      }
-      
-      //Once sequence finished
-      digitalWrite(S_LED_PIN, LOW);
-      overheatLevel = 0;
-      
-      }else{
-      playFile(range == RED ? TVG_BLAST_1B : range == BLUE ? TVG_BLAST_2B : range == GREEN ? TVG_BLAST_3B : TVG_BLAST_4B);
+      if (overheatLevel >= OVERHEAT_THRESHOLD_2) {
+        //Overheat Sequence
+        overheatLevel = OVERHEAT_THRESHOLD_2;
+
+        playFile(range == RED ? TVG_BLAST_1B_OV : range == BLUE ? TVG_BLAST_2B_OV : range == GREEN ? TVG_BLAST_3B_OV : TVG_BLAST_4B_OV);
+        delay(100);
+        while (!mp3IsPlaying()); //wait for play finished
+
+        playFile(TVG_OVERHEAT);
+        digitalWrite(S_LED_PIN, HIGH);
+        delay(START_SMOKE_DELAY + 100);
+
+        while (!mp3IsPlaying()) { //wait for play finished
+          if (overheatLevel > 1) {
+            digitalWrite(S_RELAY_PIN, HIGH);
+            overheatLevel--;
+            delay(10);
+          } else {
+            digitalWrite(S_RELAY_PIN, LOW);
+          }
+        }
+
+        //Once sequence finished
+        digitalWrite(S_LED_PIN, LOW);
+        overheatLevel = 0;
+
+      } else {
+        playFile(range == RED ? TVG_BLAST_1B : range == BLUE ? TVG_BLAST_2B : range == GREEN ? TVG_BLAST_3B : TVG_BLAST_4B);
       }
       blast = true;
       delay(250);
@@ -930,7 +1159,7 @@ if(overheatLevel < OVERHEAT_THRESHOLD_1){
       //add fire sound(here)
       playFile(range == RED ? TVG_BLAST_1A : range == BLUE ? TVG_BLAST_2A : range == GREEN ? TVG_BLAST_3A : TVG_BLAST_4A);
       blast = true;
-      delay(1000);      
+      delay(1000);
     }
     else { //if not of course change range
 
@@ -943,7 +1172,7 @@ if(overheatLevel < OVERHEAT_THRESHOLD_1){
       playFile(tempRange == RED ? TVG_RANGE_1 : tempRange == BLUE ? TVG_RANGE_2 : tempRange == GREEN ? TVG_RANGE_3 : TVG_RANGE_4);
       delay(100);
       range = NOCOLOR;
-      while(!mp3IsPlaying()); //wait for sound finished
+      while (!mp3IsPlaying()); //wait for sound finished
       range  = tempRange;
       delay(100);
     }//end of range select
@@ -976,21 +1205,21 @@ if(overheatLevel < OVERHEAT_THRESHOLD_1){
       playFile(range == RED ? TVG_STOP_1_OV : range == BLUE ? TVG_STOP_2_OV : range == GREEN ? TVG_STOP_3_OV : TVG_STOP_4_OV);
       blast = false;
       delay(100);
-      while(!mp3IsPlaying());
+      while (!mp3IsPlaying());
       playFile(TVG_OVERHEAT);
       digitalWrite(S_LED_PIN, HIGH);
-      delay(START_SMOKE_DELAY+100);
-      
-      while(!mp3IsPlaying()){//wait for play finished
-      if(overheatLevel > 1) {
-      digitalWrite(S_RELAY_PIN, HIGH);
-      overheatLevel--;
-      delay(10);
-      }else{
-      digitalWrite(S_RELAY_PIN, LOW);  
+      delay(START_SMOKE_DELAY + 100);
+
+      while (!mp3IsPlaying()) { //wait for play finished
+        if (overheatLevel > 1) {
+          digitalWrite(S_RELAY_PIN, HIGH);
+          overheatLevel--;
+          delay(10);
+        } else {
+          digitalWrite(S_RELAY_PIN, LOW);
+        }
       }
-      }
-      
+
       //Once sequence finished
       digitalWrite(S_LED_PIN, LOW);
       overheatLevel = 0;
@@ -1058,130 +1287,30 @@ void setBlastLeds(uint8_t color) {
 
     case CLASSIC_COLOR:
 
-      analogWrite(F_RED, map(tempFade,0,255,0,CLASSIC_RED_BLAST_LEVEL));
-      analogWrite(F_BLUE, map(255 - tempFade, 0, 255, 0, CLASSIC_BLUE_BLAST_LEVEL));
+      analogWrite(F_RED, tempFade);
+      analogWrite(F_BLUE, 255 - tempFade);
       break;
 
     case RED:
-      analogWrite(F_RED, map(tempFade, 0, 255, 0, RED_BLAST_LEVEL));
+      analogWrite(F_RED, tempFade);
       break;
 
     case GREEN:
-      analogWrite(F_GREEN, map(tempFade, 0, 255, 0, GREEN_BLAST_LEVEL));
+      analogWrite(F_GREEN, tempFade);
       break;
 
     case BLUE:
-      analogWrite(F_BLUE, map(tempFade, 0, 255, 0, BLUE_BLAST_LEVEL));
+      analogWrite(F_BLUE, tempFade);
       break;
 
     case YELLOW:
-      analogWrite(F_RED, map(tempFade, 0, 255, 0, YELLOW_RED_BLAST_LEVEL));
-      analogWrite(F_GREEN, map(tempFade, 0, 255, 0, YELLOW_GREEN_BLAST_LEVEL));
+      analogWrite(F_RED, tempFade);
+      analogWrite(F_GREEN, tempFade);
       break;
 
     case WHITE:
-      analogWrite(F_WHITE, map(tempFade, 0, 255, 0, WHITE_BLAST_LEVEL));
+      analogWrite(F_WHITE, tempFade);
       break;
-        
-     case USER1_COLOR:
-       
-        #if USER1_RED_BLAST_LEVEL > 0
-        analogWrite(F_RED, map(tempFade, 0, 255, 0, USER1_RED_BLAST_LEVEL));
-        #endif
-        
-        #if USER1_GREEN_BLAST_LEVEL > 0
-        analogWrite(F_GREEN, map(tempFade, 0, 255, 0, USER1_GREEN_BLAST_LEVEL));
-        #endif
-        
-        #if USER1_BLUE_BLAST_LEVEL > 0
-        analogWrite(F_BLUE, map(tempFade, 0, 255, 0, USER1_BLUE_BLAST_LEVEL));
-        #endif
-        
-        #if USER1_WHITE_BLAST_LEVEL > 0
-        analogWrite(F_WHITE, map(tempFade, 0, 255, 0, USER1_WHITE_BLAST_LEVEL));
-        #endif
-        
-       break;
-        
-        case USER2_COLOR:
-       
-        #if USER2_RED_BLAST_LEVEL > 0
-        analogWrite(F_RED, map(tempFade, 0, 255, 0, USER2_RED_BLAST_LEVEL));
-        #endif
-        
-        #if USER2_GREEN_BLAST_LEVEL > 0
-        analogWrite(F_GREEN, map(tempFade, 0, 255, 0, USER2_GREEN_BLAST_LEVEL));
-        #endif
-        
-        #if USER2_BLUE_BLAST_LEVEL > 0
-        analogWrite(F_BLUE, map(tempFade, 0, 255, 0, USER2_BLUE_BLAST_LEVEL));
-        #endif
-        
-        #if USER2_WHITE_BLAST_LEVEL > 0
-        analogWrite(F_WHITE, map(tempFade, 0, 255, 0, USER2_WHITE_BLAST_LEVEL));
-        #endif
-        
-       break;
-        
-        case USER3_COLOR:
-       
-        #if USER3_RED_BLAST_LEVEL > 0
-        analogWrite(F_RED, map(tempFade, 0, 255, 0, USER3_RED_BLAST_LEVEL));
-        #endif
-        
-        #if USER3_GREEN_BLAST_LEVEL > 0
-        analogWrite(F_GREEN, map(tempFade, 0, 255, 0, USER3_GREEN_BLAST_LEVEL));
-        #endif
-        
-        #if USER3_BLUE_BLAST_LEVEL > 0
-        analogWrite(F_BLUE, map(tempFade, 0, 255, 0, USER3_BLUE_BLAST_LEVEL));
-        #endif
-        
-        #if USER3_WHITE_BLAST_LEVEL > 0
-        analogWrite(F_WHITE, map(tempFade, 0, 255, 0, USER3_WHITE_BLAST_LEVEL));
-        #endif
-        
-       break;
-        
-        case USER4_COLOR:
-       
-        #if USER4_RED_BLAST_LEVEL > 0
-        analogWrite(F_RED, map(tempFade, 0, 255, 0, USER4_RED_BLAST_LEVEL));
-        #endif
-        
-        #if USER4_GREEN_BLAST_LEVEL > 0
-        analogWrite(F_GREEN, map(tempFade, 0, 255, 0, USER4_GREEN_BLAST_LEVEL));
-        #endif
-        
-        #if USER4_BLUE_BLAST_LEVEL > 0
-        analogWrite(F_BLUE, map(tempFade, 0, 255, 0, USER4_BLUE_BLAST_LEVEL));
-        #endif
-        
-        #if USER4_WHITE_BLAST_LEVEL > 0
-        analogWrite(F_WHITE, map(tempFade, 0, 255, 0, USER4_WHITE_BLAST_LEVEL));
-        #endif
-        
-       break;
-        
-        case USER5_COLOR:
-       
-        #if USER5_RED_BLAST_LEVEL > 0
-        analogWrite(F_RED, map(tempFade, 0, 255, 0, USER5_RED_BLAST_LEVEL));
-        #endif
-        
-        #if USER5_GREEN_BLAST_LEVEL > 0
-        analogWrite(F_GREEN, map(tempFade, 0, 255, 0, USER5_GREEN_BLAST_LEVEL));
-        #endif
-        
-        #if USER5_BLUE_BLAST_LEVEL > 0
-        analogWrite(F_BLUE, map(tempFade, 0, 255, 0, USER5_BLUE_BLAST_LEVEL));
-        #endif
-        
-        #if USER5_WHITE_BLAST_LEVEL > 0
-        analogWrite(F_WHITE, map(tempFade, 0, 255, 0, USER5_WHITE_BLAST_LEVEL));
-        #endif
-        
-       break;
 
   }
 
@@ -1250,26 +1379,26 @@ void setCyclotron(uint8_t leds, uint8_t color) {
       analogWrite(cyclotron[i] , 255);
     }
     //digitalWrite(cyclotron[leds], HIGH);
-    #if DEFAULT_CYCLOTRON_COLOR == RED
+#if DEFAULT_CYCLOTRON_COLOR == RED
     analogWrite(C_RED, MAX_BRIGHT);
-    #elif DEFAULT_CYCLOTRON_COLOR == GREEN
+#elif DEFAULT_CYCLOTRON_COLOR == GREEN
     analogWrite(C_GREEN, MAX_BRIGHT);
-    #elif DEFAULT_CYCLOTRON_COLOR == BLUE
+#elif DEFAULT_CYCLOTRON_COLOR == BLUE
     analogWrite(C_BLUE, MAX_BRIGHT);
-    #elif DEFAULT_CYCLOTRON_COLOR == YELLOW
-    analogWrite(C_RED, MAX_BRIGHT);
-    analogWrite(C_GREEN, MAX_BRIGHT);
-    #elif DEFAULT_CYCLOTRON_COLOR == PURPLE
-    analogWrite(C_RED, MAX_BRIGHT);
-    analogWrite(C_BLUE, MAX_BRIGHT);
-    #elif DEFAULT_CYCLOTRON_COLOR == CYAN
-    analogWrite(C_GREEN, MAX_BRIGHT);
-    analogWrite(C_BLUE, MAX_BRIGHT);
-    #elif DEFAULT_CYCLOTRON_COLOR == WHITE
+#elif DEFAULT_CYCLOTRON_COLOR == YELLOW
     analogWrite(C_RED, MAX_BRIGHT);
     analogWrite(C_GREEN, MAX_BRIGHT);
+#elif DEFAULT_CYCLOTRON_COLOR == PURPLE
+    analogWrite(C_RED, MAX_BRIGHT);
     analogWrite(C_BLUE, MAX_BRIGHT);
-    #endif
+#elif DEFAULT_CYCLOTRON_COLOR == CYAN
+    analogWrite(C_GREEN, MAX_BRIGHT);
+    analogWrite(C_BLUE, MAX_BRIGHT);
+#elif DEFAULT_CYCLOTRON_COLOR == WHITE
+    analogWrite(C_RED, MAX_BRIGHT);
+    analogWrite(C_GREEN, MAX_BRIGHT);
+    analogWrite(C_BLUE, MAX_BRIGHT);
+#endif
     analogWrite(cyclotron[leds] , 0);
   }
 
