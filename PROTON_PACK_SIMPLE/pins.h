@@ -79,10 +79,10 @@
 #define MP3_BUSY_PIN      39
 #define SOUND_PIN         A15
 #define BLAST_RELAY       40
+#define CMD_EXT_CIRCUIT   23
 
 
 
 //for Ghostbusters-BHZ(Gizmo belt)
 //#define ERROR_BOX         42 //same as overheat
 #define EXT_CLOCK         43
-

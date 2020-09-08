@@ -34,7 +34,7 @@ uint8_t bargraph[] = { B_PIN_1, B_PIN_2, B_PIN_3, B_PIN_4, B_PIN_5, B_PIN_6, B_P
 uint8_t cyclotron[] = { C_PIN_1, C_PIN_2, C_PIN_3, C_PIN_4,};
 uint8_t colorFilter[] = { C_RED, C_GREEN, C_BLUE, };
 uint8_t seers[] = { S_PIN_1, S_PIN_2, S_PIN_3, S_PIN_4, S_PIN_5, S_PIN_6, };
-uint8_t specialPins[] = { S_RELAY_PIN, S_LED_PIN, EXT_CLOCK, BLAST_RELAY};
+uint8_t specialPins[] = { S_RELAY_PIN, S_LED_PIN, EXT_CLOCK, BLAST_RELAY, CMD_EXT_CIRCUIT};
 uint8_t buttons[] = { BUT1, BUT2, SW1, SW2, };
 
 
@@ -116,6 +116,7 @@ void HybrideProtonPack(void);
 void TVGProtonPack(void);
 void playFile(uint8_t FILE_N);
 bool mp3IsPlaying(void);
+void callOverheatPin(void);
 
 
 
@@ -165,6 +166,7 @@ void setup() {
 
   pinMode(MP3_BUSY_PIN, INPUT);
 
+  digitalWrite(CMD_EXT_CIRCUIT, HIGH); //never forget that pin must have HIGH level(for a pull up circuit set)
 
   //delay(3000);
   cli();
@@ -184,7 +186,7 @@ ISR(TIMER5_OVF_vect) {
   counterTimeFlasher++;
 
   digitalWrite(BLAST_RELAY, blast);
-  
+
   if (blast) {
 
 
@@ -1014,11 +1016,13 @@ void HybrideProtonPack(void) {
     if (overheatLevel > OVERHEAT_THRESHOLD_2) { //start overheat sequence(here)
       //overheatLevel = OVERHEAT_THRESHOLD_2;
       //Overheat Sequence
+
       playFile(TVG_STOP_1_OV);
       blast = false;
       delay(100);
       while (!mp3IsPlaying());
       playFile(TVG_OVERHEAT);
+      callOverheatPin(); //tell to another circuit to change state !
       digitalWrite(S_LED_PIN, HIGH);
       delay(START_SMOKE_DELAY + 100);
 
@@ -1034,6 +1038,7 @@ void HybrideProtonPack(void) {
 
       //Once sequence finished
       digitalWrite(S_LED_PIN, LOW);
+      callOverheatPin(); //tell to another circuit to change state !
       overheatLevel = 0;
     }
 
@@ -1125,6 +1130,7 @@ void TVGProtonPack(void) {
         while (!mp3IsPlaying()); //wait for play finished
 
         playFile(TVG_OVERHEAT);
+        callOverheatPin(); //tell to another circuit to change state !
         digitalWrite(S_LED_PIN, HIGH);
         delay(START_SMOKE_DELAY + 100);
 
@@ -1140,6 +1146,7 @@ void TVGProtonPack(void) {
 
         //Once sequence finished
         digitalWrite(S_LED_PIN, LOW);
+        callOverheatPin(); //tell to another circuit to change state !
         overheatLevel = 0;
 
       } else {
@@ -1207,6 +1214,7 @@ void TVGProtonPack(void) {
       delay(100);
       while (!mp3IsPlaying());
       playFile(TVG_OVERHEAT);
+      callOverheatPin(); //tell to another circuit to change state !
       digitalWrite(S_LED_PIN, HIGH);
       delay(START_SMOKE_DELAY + 100);
 
@@ -1222,6 +1230,7 @@ void TVGProtonPack(void) {
 
       //Once sequence finished
       digitalWrite(S_LED_PIN, LOW);
+      callOverheatPin(); //tell to another circuit to change state !
       overheatLevel = 0;
     }
 
@@ -1461,3 +1470,12 @@ void setCyclotron(uint8_t leds, uint8_t color) {
 
 }
 
+
+void callOverheatPin(void) {
+
+  digitalWrite(CMD_EXT_CIRCUIT, LOW);
+  delay(50);
+  digitalWrite(CMD_EXT_CIRCUIT, HIGH);
+  delay(50);
+
+}
