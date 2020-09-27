@@ -108,7 +108,7 @@
 #define STR_44     "TVG_STOP_3_OV"
 #define STR_45     "TVG_STOP_4_OV"
 #define STR_46     "CHANGE_BANK"
-#define STR_47     "TRACK_1"
+#define STR_47     "TRACK_"
 
 char *mp3Names[] = { STR_1, STR_2, STR_3, STR_4, STR_5, STR_6, STR_7, STR_8, STR_9, STR_10, 
                      STR_11, STR_12, STR_13, STR_14, STR_15, STR_16, STR_17, STR_18, STR_19, STR_20, 

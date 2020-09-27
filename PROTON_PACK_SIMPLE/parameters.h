@@ -87,3 +87,5 @@
 #define CLOCK_SEERS_1                 100 //Main Seers speed
 #define CLOCK_SEERS_2                 5 //Overheat Seer speed
 #define CLOCK_SEERS_3                 20 //Overheat Seer speed
+
+#define NUMBER_OF_TRACKS			  10
