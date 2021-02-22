@@ -50,6 +50,7 @@ volatile uint16_t clock2 = 0;
 volatile uint16_t clock3 = 0;
 int16_t overheatLevel = 0;
 volatile uint8_t range = RED;
+uint8_t TRK_OF = 0;
 
 uint32_t timerPackOff, timerOverheat;
 
@@ -115,6 +116,7 @@ void classicProtonPack(void);
 void HybrideProtonPack(void);
 void TVGProtonPack(void);
 void playFile(uint8_t FILE_N);
+void playFile(uint8_t FILE_N, uint8_t offset);
 bool mp3IsPlaying(void);
 void callOverheatPin(void);
 
@@ -166,7 +168,9 @@ void setup() {
 
   pinMode(MP3_BUSY_PIN, INPUT);
 
-  digitalWrite(CMD_EXT_CIRCUIT, HIGH); //never forget that pin must have HIGH level(for a pull up circuit set)
+  digitalWrite(BLAST_RELAY, HIGH);
+
+  digitalWrite(CMD_EXT_CIRCUIT, LOW); //never forget that pin must have LOW level(for a pull up circuit set)
 
   //delay(3000);
   cli();
@@ -185,7 +189,7 @@ ISR(TIMER5_OVF_vect) {
   //blast part
   counterTimeFlasher++;
 
-  digitalWrite(BLAST_RELAY, blast);
+  digitalWrite(BLAST_RELAY, !blast);
 
   if (blast) {
 
@@ -208,11 +212,11 @@ ISR(TIMER5_OVF_vect) {
 
 #else //ENABLE_BB
 
-    if (BANK == CLASSIC_BANK) {
+   // if (BANK == CLASSIC_BANK) {
 
       blastColor = (protonArmed ? DEFAULT_BLAST_COLOR_1 : DEFAULT_BLAST_COLOR_2);
 
-    } else { //TVG_BANK
+  /*  } else { //TVG_BANK
 
 #if TVG_BLAST_TYPE == RGB_BLAST
       blastColor = range;
@@ -222,7 +226,7 @@ ISR(TIMER5_OVF_vect) {
       blastColor = DEFAULT_BLAST_COLOR_2;
 #endif
 
-    }
+    }*/
 
 #endif
 
@@ -577,7 +581,8 @@ ISR(TIMER5_OVF_vect) {
 
     clock3++;
     if (clock3 > CLOCK_SEERS_3) {
-      sLed3 = (!sLed3 & protonArmed); //see bitwise operation for blink effect
+      //sLed3 = (!sLed3 & protonArmed); //see bitwise operation for blink effect
+      sLed3 = protonArmed; 
       clock3 = 0;
     }
 
@@ -681,6 +686,8 @@ void loop() {
       digitalWrite(specialPins[i], LOW);
     }
 
+    digitalWrite(BLAST_RELAY, HIGH);
+    
     //reset vars
     powC = 1;
     barC = 0;
@@ -739,7 +746,11 @@ void loop() {
     if (digitalRead(BUT1)) {
       delay(50);
       while (digitalRead(BUT1));
-      playFile(TRACK_1);
+      playFile(TRACK_1, TRK_OF);
+	  TRK_OF++;
+	  if(TRK_OF >= NUMBER_OF_TRACKS){
+		  TRK_OF = 0;
+	  }
       TrackPlay = true;
     }
 
@@ -858,12 +869,26 @@ void HybrideProtonPack(void) {
     if (digitalRead(SW2) && !protonArmed) {
 
       //add arm sound(here)
-      //playFile(TVG_BOOT_ON);
-      //delay(100);
+      playFile(TVG_BOOT_ON);
+      delay(100);
       protonArmed = true;
     }
 
     if (!digitalRead(SW2) && protonArmed) {
+
+     if (overheatLevel > 0) {
+        playFile(TVG_PCK_VENT);
+        digitalWrite(S_LED_PIN, HIGH);
+        while (overheatLevel > 0) {
+          overheatLevel--;
+          delay(10);
+        }
+        digitalWrite(S_LED_PIN, LOW);
+        overheatLevel = 0;
+      } else {
+        playFile(TVG_DRY_VENT);
+      }
+      
       protonArmed = false;
     }
 
@@ -924,6 +949,8 @@ void HybrideProtonPack(void) {
 
     }*/
 
+if(!digitalRead(BUT2)){
+
   if (digitalRead(BUT1) && !blast) { //multi fonction button
 
     if (protonArmed) {//normal blast
@@ -942,16 +969,18 @@ void HybrideProtonPack(void) {
     blast = false;
   }
 
+}
+
+if(!digitalRead(BUT1)){
 
   if (digitalRead(BUT2) && !blast) { //multi fonction button
 
     if (protonArmed) {//normal blast
       //add fire sound(here)
-      playFile(TVG_BLAST_2A);
+      playFile(protonArmed ? CLASSIC_BLAST_1 : CLASSIC_BLAST_2);
       blast = true;
       delay(1000);
-
-    } else { //refresh sequence
+    } /*else { //refresh sequence
 
       //add safe on sound(here)
       if (overheatLevel > 0) {
@@ -968,16 +997,20 @@ void HybrideProtonPack(void) {
       }
 
 
-    }
+    }*/
 
   }
+  
 
-  if (!digitalRead(BUT2) && blast) {
+ if (!digitalRead(BUT2) && blast) {
     //add stop sound(here)
-    playFile(TVG_STOP_2);
+    playFile(protonArmed ? CLASSIC_STOP_1 : CLASSIC_STOP_2);
     delay(100);
     blast = false;
   }
+
+
+}
 
   //UNUSED
   /*else { //if not of course change range
@@ -1270,6 +1303,23 @@ void playFile(uint8_t FILE_N) {
 }
 
 
+
+
+
+void playFile(uint8_t FILE_N, uint8_t offset) {
+#ifdef MP3_DEBUG
+  Serial.print("TRYING TO PLAY : [");
+  Serial.print(FILE_N);
+  Serial.print("]\t");
+  Serial.println(mp3Names[FILE_N - 1]);
+#endif
+  mp3_play(FILE_N + offset);
+  delay(30);
+}
+
+
+
+
 bool mp3IsPlaying(void) {
   return digitalRead(MP3_BUSY_PIN);
 }
@@ -1473,9 +1523,9 @@ void setCyclotron(uint8_t leds, uint8_t color) {
 
 void callOverheatPin(void) {
 
-  digitalWrite(CMD_EXT_CIRCUIT, LOW);
-  delay(50);
   digitalWrite(CMD_EXT_CIRCUIT, HIGH);
-  delay(50);
+  delay(150);
+  digitalWrite(CMD_EXT_CIRCUIT, LOW);
+  delay(150);
 
 }

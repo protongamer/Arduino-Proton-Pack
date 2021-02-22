@@ -61,9 +61,9 @@
 
 //seers
 #define S_PIN_1           48
-#define S_PIN_2           49
+#define S_PIN_2           51
 #define S_PIN_3           50
-#define S_PIN_4           51
+#define S_PIN_4           49
 #define S_PIN_5           52
 #define S_PIN_6           53
 
