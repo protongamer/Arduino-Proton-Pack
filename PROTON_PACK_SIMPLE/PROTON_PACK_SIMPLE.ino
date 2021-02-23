@@ -955,7 +955,7 @@ if(!digitalRead(BUT2)){
 
     if (protonArmed) {//normal blast
       //add fire sound(here)
-      playFile(TVG_BLAST_1A);
+      playFile(CLASSIC_BLAST_2);
       blast = true;
       delay(1000);
     }
@@ -964,7 +964,7 @@ if(!digitalRead(BUT2)){
 
   if (!digitalRead(BUT1) && blast) {
     //add stop sound(here)
-    playFile(TVG_STOP_1);
+    playFile(CLASSIC_STOP_2);
     delay(100);
     blast = false;
   }
@@ -977,7 +977,7 @@ if(!digitalRead(BUT1)){
 
     if (protonArmed) {//normal blast
       //add fire sound(here)
-      playFile(protonArmed ? CLASSIC_BLAST_1 : CLASSIC_BLAST_2);
+      playFile(CLASSIC_BLAST_1);
       blast = true;
       delay(1000);
     } /*else { //refresh sequence
@@ -1004,7 +1004,7 @@ if(!digitalRead(BUT1)){
 
  if (!digitalRead(BUT2) && blast) {
     //add stop sound(here)
-    playFile(protonArmed ? CLASSIC_STOP_1 : CLASSIC_STOP_2);
+    playFile(CLASSIC_STOP_1);
     delay(100);
     blast = false;
   }
@@ -1041,7 +1041,7 @@ if(!digitalRead(BUT1)){
     }
 
     if (overheatLevel > OVERHEAT_THRESHOLD_1 && !startOvSound) {
-      playFile(TVG_BLAST_1A_OV);
+      playFile(digitalRead(BUT1) ? HYBRIDE_BLAST_2_OV : HYBRIDE_BLAST_1_OV);
       delay(100);
       startOvSound = true;
     }
@@ -1050,7 +1050,7 @@ if(!digitalRead(BUT1)){
       //overheatLevel = OVERHEAT_THRESHOLD_2;
       //Overheat Sequence
 
-      playFile(TVG_STOP_1_OV);
+      playFile(digitalRead(BUT1) ? HYBRIDE_STOP_2_OV : HYBRIDE_STOP_1_OV);
       blast = false;
       delay(100);
       while (!mp3IsPlaying());

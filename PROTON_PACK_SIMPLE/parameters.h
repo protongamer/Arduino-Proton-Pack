@@ -5,10 +5,10 @@
 
 
 //general timing
-#define POWERCELL_DEFAULT_SPEED             100 //Powercell speed
-#define BARGRAPH_DEFAULT_SPEED              100 //Bargraph speed
-#define SEERS_DEFAULT_SPEED                 100 //Bargraph speed
-#define FLASH_DEFAULT_SPEED                 150 //Bargraph speed
+#define POWERCELL_DEFAULT_SPEED             140 //Powercell speed
+#define BARGRAPH_DEFAULT_SPEED              150 //Bargraph speed
+#define SEERS_DEFAULT_SPEED                 40 //Seers speed
+#define FLASH_DEFAULT_SPEED                 150 //Flash speed
 
 ///////////////////////////////////////////////////////////////////
 //Cyclotron parameters
@@ -17,7 +17,7 @@
 
 //TVG cyclotron
 #define TVG_CYCLOTRON_COUNTER_BRIGHT          50   //for bright animation update
-#define TVG_CYCLOTRON_COUNTER_OVERFLOW        2500
+#define TVG_CYCLOTRON_COUNTER_OVERFLOW        4000
 #define DECREMENT_FACTOR                      5     //cyclotron bright decrement factor
 //color parameters
 #define RED_BRIGHT                            200
@@ -26,7 +26,7 @@
 
 
 //For classic only
-#define CLASSIC_CYCLOTRON_COUNTER_OVERFLOW        2500    
+#define CLASSIC_CYCLOTRON_COUNTER_OVERFLOW        4000    
 #define DEFAULT_CYCLOTRON_COLOR                   RED
 
 ////////////////////////////////////////////////////////////////
@@ -36,20 +36,20 @@
 //Various parameters
 
 //use the video game program(otherwise comment it with // )
-//#define ENABLE_TVG_BANK
+#define ENABLE_TVG_BANK
 
 //Use Classic and TVG Banks with dynamic change feature
-#define ENABLE_BOTH_BANKS
+//#define ENABLE_BOTH_BANKS
 
 //Use Hybride program than the video game program (NEED AT LEAST "ENABLE_TVG_BANK" PARAMETER ENABLED !!!!)
 #define ENABLE_HYBRIDE
 
 
 //if the video game program, accurate overheat animation bargraph ?
-#define BARGRAPH_OVERHEAT     CLASSIC_ANIMATION
+#define BARGRAPH_OVERHEAT     SPEED_ANIMATION
 
 //What fire animation do we use ? (discard it if classic animation and the video game program enabled)
-#define ANIMATION_X ANIMATION_1
+#define ANIMATION_X ANIMATION_3
 
 //external clock counter, 0 = full speed, x = ~(speed/x)
 #define EXT_CLOCK_COUNTER                   1
@@ -69,16 +69,15 @@
 //Define default color blast when rookie give a try to blast that ghost
 
 //
-#define TVG_BLAST_TYPE                RGB_BLAST
+#define TVG_BLAST_TYPE                COLOR_1_BLAST
 //for classic proton pack or TVG_BLAST_TYPE COLOR_X_BLAST
 #define DEFAULT_BLAST_COLOR_1         WHITE
-#define DEFAULT_BLAST_COLOR_2         CLASSIC_COLOR
-
+#define DEFAULT_BLAST_COLOR_2         WHITE
 
 #define VOLUME                        30
 
-#define OVERHEAT_THRESHOLD_1          60          //Warning sequence prefer these values[40~60]
-#define OVERHEAT_THRESHOLD_2          90         //Overheat sequence prefer these values[70~90]
+#define OVERHEAT_THRESHOLD_1          50          //Warning sequence prefer these values[40~60]
+#define OVERHEAT_THRESHOLD_2          70         //Overheat sequence prefer these values[70~90]
 #define DART_OV_INCREMENT             20        //increment overheat level for every dart shot
 
 
@@ -88,4 +87,4 @@
 #define CLOCK_SEERS_2                 5 //Overheat Seer speed
 #define CLOCK_SEERS_3                 20 //Overheat Seer speed
 
-#define NUMBER_OF_TRACKS			  10
+#define NUMBER_OF_TRACKS			  12

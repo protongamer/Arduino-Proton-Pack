@@ -54,7 +54,11 @@
 #define TVG_STOP_3_OV                         44
 #define TVG_STOP_4_OV                         45
 #define CHANGE_BANK                           46
-#define TRACK_1                               47
+#define HYBRIDE_STOP_1_OV                     47
+#define HYBRIDE_STOP_2_OV                     48
+#define HYBRIDE_BLAST_1_OV                    49
+#define HYBRIDE_BLAST_2_OV                    50
+#define TRACK_1                               51
 
 
 
@@ -108,16 +112,15 @@
 #define STR_44     "TVG_STOP_3_OV"
 #define STR_45     "TVG_STOP_4_OV"
 #define STR_46     "CHANGE_BANK"
-#define STR_47     "TRACK_"
+#define STR_47     "HYBRIDE_STOP_1_OV"
+#define STR_48     "HYBRIDE_STOP_2_OV"
+#define STR_49     "HYBRIDE_BLAST_1_OV"
+#define STR_50     "HYBRIDE_BLAST_2_OV"
+#define STR_51     "TRACK_"
 
 char *mp3Names[] = { STR_1, STR_2, STR_3, STR_4, STR_5, STR_6, STR_7, STR_8, STR_9, STR_10, 
                      STR_11, STR_12, STR_13, STR_14, STR_15, STR_16, STR_17, STR_18, STR_19, STR_20, 
                      STR_21, STR_22, STR_23, STR_24, STR_25, STR_26, STR_27, STR_28, STR_29, STR_30, 
                      STR_31, STR_32, STR_33, STR_34, STR_35, STR_36, STR_37, STR_38, STR_39, STR_40, 
-                     STR_41, STR_42, STR_43, STR_44, STR_45, STR_46, STR_47,};
-
-
-
-
-
-
+                     STR_41, STR_42, STR_43, STR_44, STR_45, STR_46, STR_47, STR_48, STR_49, STR_50,
+                     STR_51,};
