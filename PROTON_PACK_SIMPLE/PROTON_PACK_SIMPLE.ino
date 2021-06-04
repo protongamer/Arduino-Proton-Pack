@@ -621,11 +621,14 @@ ISR(TIMER5_OVF_vect) {
   //ext clock stuff
 
   extCounter++;
-  if (extCounter >= EXT_CLOCK_COUNTER) {
+  /*if (extCounter >= EXT_CLOCK_COUNTER) {
+    digitalWrite(EXT_CLOCK, !digitalRead(EXT_CLOCK));
+  }*/
+
+if (extCounter >= map(overheatLevel, 0, 100, EXT_CLOCK_COUNTER, 5)) {
     digitalWrite(EXT_CLOCK, !digitalRead(EXT_CLOCK));
   }
-
-
+	  
 
 
 }//end of ISR TIMER 5
