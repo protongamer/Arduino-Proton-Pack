@@ -51,8 +51,8 @@
 //What fire animation do we use ? (discard it if classic animation and the video game program enabled)
 #define ANIMATION_X ANIMATION_3
 
-//external clock counter, 0 = full speed, x = ~(speed/x)
-#define EXT_CLOCK_COUNTER                   1
+//external clock counter
+#define EXT_CLOCK_COUNTER                   4000
 
 
 #define FLASH_BRIGHT                  255
