@@ -42,12 +42,12 @@ uint8_t buttons[] = { BUT1, BUT2, SW1, SW2, };
 //var process
 
 //miscellaneous
-volatile uint8_t extCounter = 0;
 volatile uint8_t seersByte;
 volatile uint16_t counterTimeSeers = 0;
 volatile uint16_t clock1 = 0;
 volatile uint16_t clock2 = 0;
 volatile uint16_t clock3 = 0;
+volatile uint16_t extCounter = 0;
 int16_t overheatLevel = 0;
 volatile uint8_t range = RED;
 uint8_t TRK_OF = 0;
@@ -625,7 +625,7 @@ ISR(TIMER5_OVF_vect) {
     digitalWrite(EXT_CLOCK, !digitalRead(EXT_CLOCK));
   }*/
 
-if (extCounter >= map(overheatLevel, 0, 100, EXT_CLOCK_COUNTER, 5)) {
+if (extCounter >= EXT_CLOCK_COUNTER - map(overheatLevel, 0, 100, 0, EXT_CLOCK_COUNTER)) {
     digitalWrite(EXT_CLOCK, !digitalRead(EXT_CLOCK));
   }
 	  
