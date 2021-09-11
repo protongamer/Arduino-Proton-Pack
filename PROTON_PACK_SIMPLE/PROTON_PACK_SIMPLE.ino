@@ -627,7 +627,7 @@ ISR(TIMER5_OVF_vect) {
     extCounter=0;
   }*/
 
-  if (extCounter >= EXT_CLOCK_COUNTER - map(overheatLevel, 0, 100, 0, EXT_CLOCK_COUNTER)){
+  if (extCounter >= map(overheatLevel, 0, 100, EXT_CLOCK_COUNTER, MIN_EXT_CLOCK_COUNTER)){
   digitalWrite(EXT_CLOCK, !digitalRead(EXT_CLOCK));
   }
 
