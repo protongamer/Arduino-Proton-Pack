@@ -53,6 +53,7 @@
 
 //external clock counter
 #define EXT_CLOCK_COUNTER                   4000
+#define MIN_EXT_CLOCK_COUNTER               3000
 
 #define FLASH_BRIGHT                  255
 
