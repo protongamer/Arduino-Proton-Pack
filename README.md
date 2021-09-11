@@ -84,7 +84,7 @@ ________________________________________________________________________________
 | ENABLE_HYBRIDE | Comment / Uncomment | Use Hybride Mode than TVG Mode, it's Classic mode mixed with some TVG Mode features (ENABLE_BOTH_BANKS or ENABLE_TVG_BANK REQUIRED !) |
 | BARGRAPH_OVERHEAT | CLASSIC_ANIMATION, SPEED_ANIMATION | Define overheat bargraph animation when proton pack goes to heat (TVG MODE ONLY) if CLASSIC_ANIMATION ==> It will use ANIMATION_OH otherwise it will use ANIMATION_X with speed depending on overheat level |
 | ANIMATION_X | ANIMATION_1, ANIMATION_2, ANIMATION_3, ..., ANIMATION_20 | Define bargraph fire animation |
-| EXT_CLOCK_COUNTER | 0-255 | Set External Clock Speed (Low value = High Speed) |
+| EXT_CLOCK_COUNTER | 0-65535 | Set External Clock Speed (Low value = High Speed) |
 | FLASH_EFFECT | NORMAL, SOUND_REACT | Define blast effect(normal random flash or flash depending on sound file recorded through ADC) |
 | MIN_VALUE | 0-1023 | Set range of min value(for SOUND_REACT) |
 | MAX_VALUE | 0-1023 | Set range of max value(for SOUND_REACT) |
