@@ -42,6 +42,7 @@ uint8_t buttons[] = { BUT1, BUT2, SW1, SW2, };
 //var process
 
 //miscellaneous
+
 volatile uint8_t seersByte;
 volatile uint16_t counterTimeSeers = 0;
 volatile uint16_t clock1 = 0;
@@ -623,12 +624,12 @@ ISR(TIMER5_OVF_vect) {
   extCounter++;
   /*if (extCounter >= EXT_CLOCK_COUNTER) {
     digitalWrite(EXT_CLOCK, !digitalRead(EXT_CLOCK));
+    extCounter=0;
   }*/
 
-if (extCounter >= EXT_CLOCK_COUNTER - map(overheatLevel, 0, 100, 0, EXT_CLOCK_COUNTER)) {
-    digitalWrite(EXT_CLOCK, !digitalRead(EXT_CLOCK));
+  if (extCounter >= EXT_CLOCK_COUNTER - map(overheatLevel, 0, 100, 0, EXT_CLOCK_COUNTER)){
+  digitalWrite(EXT_CLOCK, !digitalRead(EXT_CLOCK));
   }
-	  
 
 
 }//end of ISR TIMER 5
@@ -1527,8 +1528,8 @@ void setCyclotron(uint8_t leds, uint8_t color) {
 void callOverheatPin(void) {
 
   digitalWrite(CMD_EXT_CIRCUIT, HIGH);
-  delay(150);
+  delay(500);
   digitalWrite(CMD_EXT_CIRCUIT, LOW);
-  delay(150);
+  delay(500);
 
 }
