@@ -80,6 +80,7 @@
 #define SOUND_PIN         A15
 #define BLAST_RELAY       40
 #define CMD_EXT_CIRCUIT   23
+#define PIN_EXT_CIRCUIT_RELAY 22
 
 
 
