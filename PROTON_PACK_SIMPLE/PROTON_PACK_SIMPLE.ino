@@ -34,7 +34,7 @@ uint8_t bargraph[] = { B_PIN_1, B_PIN_2, B_PIN_3, B_PIN_4, B_PIN_5, B_PIN_6, B_P
 uint8_t cyclotron[] = { C_PIN_1, C_PIN_2, C_PIN_3, C_PIN_4,};
 uint8_t colorFilter[] = { C_RED, C_GREEN, C_BLUE, };
 uint8_t seers[] = { S_PIN_1, S_PIN_2, S_PIN_3, S_PIN_4, S_PIN_5, S_PIN_6, };
-uint8_t specialPins[] = { S_RELAY_PIN, S_LED_PIN, EXT_CLOCK, BLAST_RELAY, CMD_EXT_CIRCUIT};
+uint8_t specialPins[] = { S_RELAY_PIN, S_LED_PIN, EXT_CLOCK, BLAST_RELAY, CMD_EXT_CIRCUIT, PIN_EXT_CIRCUIT_RELAY};
 uint8_t buttons[] = { BUT1, BUT2, SW1, SW2, };
 
 
@@ -191,6 +191,7 @@ ISR(TIMER5_OVF_vect) {
   counterTimeFlasher++;
 
   digitalWrite(BLAST_RELAY, !blast);
+  digitalWrite(PIN_EXT_CIRCUIT_RELAY, protonActivated);
 
   if (blast) {
 
